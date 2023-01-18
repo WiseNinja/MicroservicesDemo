@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  mapentitiesservice:
+    image: ${DOCKER_REGISTRY-}mapentitiesservice
+    build:
+      context: .
+      dockerfile: MapEntitiesService/Dockerfile
