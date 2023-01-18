@@ -1,8 +1,8 @@
 ﻿using MapEntitiesService.Core.Interfaces;
 
-namespace MapEntitiesService.Core.Logging
+namespace MapEntitiesService.Infrastructure.Logging
 {
-    public class LoggingService : ILoggingService
+    public class SeqLoggingService : ILoggingService
     {
         public Task Log(string message)
         {

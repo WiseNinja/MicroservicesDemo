@@ -1,4 +1,4 @@
-﻿namespace MapEntitiesService.ViewModels
+﻿namespace MapEntitiesService.Core.ViewModels
 {
     public class MapPointVm
     {

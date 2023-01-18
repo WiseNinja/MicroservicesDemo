@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapEntitiesService.Core.Interfaces;
+using MapEntitiesService.Infrastructure.Logging;
 using MapEntitiesService.Infrastructure.MessageServiceClients;
 
 namespace MapEntitiesService.Infrastructure
@@ -14,6 +15,7 @@ namespace MapEntitiesService.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IMessageServiceClient, RabbitMqClient>();
+            services.AddScoped<ILoggingService, SeqLoggingService>();
 
             return services;
         }
