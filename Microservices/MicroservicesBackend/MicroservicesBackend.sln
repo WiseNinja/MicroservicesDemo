@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEntitiesService", "MapEntitiesService\MapEntitiesService.csproj", "{EF566365-FB86-43A1-95C3-F63CAB7819A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapEntitiesService", "MapEntitiesService\MapEntitiesService.csproj", "{EF566365-FB86-43A1-95C3-F63CAB7819A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MapEntities", "MapEntities", "{E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D70D1142-8B09-4B96-A7DD-D9D51E079A98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapeEntitiesService.Core", "MapeEntitiesService.Core\MapeEntitiesService.Core.csproj", "{B5978C73-808B-4E18-B776-87B7BD754453}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapEntitiesService.Infrastructure", "MapEntitiesService.Infrastructure\MapEntitiesService.Infrastructure.csproj", "{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notifications", "Notifications", "{718AA694-58CD-4A03-9E3B-B2457B23C686}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationsService", "NotificationsService\NotificationsService.csproj", "{35392DBF-40CD-429E-ADC6-C68BFBEF5352}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +31,27 @@ Global
 		{D70D1142-8B09-4B96-A7DD-D9D51E079A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D70D1142-8B09-4B96-A7DD-D9D51E079A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D70D1142-8B09-4B96-A7DD-D9D51E079A98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5978C73-808B-4E18-B776-87B7BD754453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5978C73-808B-4E18-B776-87B7BD754453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5978C73-808B-4E18-B776-87B7BD754453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5978C73-808B-4E18-B776-87B7BD754453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35392DBF-40CD-429E-ADC6-C68BFBEF5352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35392DBF-40CD-429E-ADC6-C68BFBEF5352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35392DBF-40CD-429E-ADC6-C68BFBEF5352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35392DBF-40CD-429E-ADC6-C68BFBEF5352}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EF566365-FB86-43A1-95C3-F63CAB7819A2} = {E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}
+		{B5978C73-808B-4E18-B776-87B7BD754453} = {E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}
+		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B} = {E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}
+		{35392DBF-40CD-429E-ADC6-C68BFBEF5352} = {718AA694-58CD-4A03-9E3B-B2457B23C686}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D7AE6EC-6C1C-4D70-8B42-0C458C10CE39}

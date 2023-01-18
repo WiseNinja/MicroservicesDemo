@@ -6,3 +6,27 @@ services:
     build:
       context: .
       dockerfile: MapEntitiesService/Dockerfile
+    networks:
+        - default
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    networks:
+        - default
+
+  notificationsservice:
+    image: ${DOCKER_REGISTRY-}notificationsservice
+    build:
+      context: .
+      dockerfile: NotificationsService/Dockerfile
+    networks:
+    - default
+
+networks:
+  default:
+    driver: default
+
