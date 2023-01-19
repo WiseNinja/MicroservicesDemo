@@ -1,6 +1,6 @@
 ﻿using Common.Connectivity.Enums;
 
-namespace Common.Connectivity;
+namespace Connectivity;
 
 public class Message
 {

@@ -1,18 +1,15 @@
-﻿using Common.Connectivity;
-using Common.Infrastructure.Logging;
-using Common.Infrastructure.RabbitMQ;
-using Common.Logging;
+﻿using Connectivity;
+using Infrastructure.RabbitMQ;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Common.Infrastructure
+namespace Infrastructure
 {
     public static class InfrastructureServicesRegistration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddScoped<IPublisher, RabbitMqPublisher>();
-            services.AddScoped<ISubscriber, RabbitMqSubscriber>();
-            services.AddTransient<ILoggingService, SeqLoggingService>();
+            services.AddSingleton<IPublisher, RabbitMqPublisher>();
+            services.AddSingleton<ISubscriber, RabbitMqSubscriber>();
             return services;
         }
     }

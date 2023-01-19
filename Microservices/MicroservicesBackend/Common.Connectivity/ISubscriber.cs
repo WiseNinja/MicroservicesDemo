@@ -1,7 +1,7 @@
-﻿namespace Common.Connectivity
+﻿namespace Connectivity
 {
     public interface ISubscriber
     {
-        Task SubscribeAsync();
+        Task SubscribeAsync(Action<string> handleMessage);
     }
 }

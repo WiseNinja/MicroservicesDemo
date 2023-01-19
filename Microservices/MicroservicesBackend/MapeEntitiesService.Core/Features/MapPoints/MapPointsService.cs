@@ -1,20 +1,19 @@
-﻿using Common.Connectivity;
-using Common.Connectivity.Enums;
-using Common.Logging;
+﻿using Common.Connectivity.Enums;
+using Connectivity;
 using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace MapEntitiesService.Core.Features.MapPoints;
 
 public class MapPointsService : IMapPointsService
 {
-    private readonly ILoggingService _loggingService;
     private readonly IPublisher _publisher;
 
-    public MapPointsService(ILoggingService loggingService, IPublisher publisher)
+    public MapPointsService(IPublisher publisher)
     {
-        _loggingService = loggingService;
+        //_logger = logger;
         _publisher = publisher;
     }
     public async Task AddNewMapPointAsync(MapPointDto mapPointDto)
@@ -26,6 +25,6 @@ public class MapPointsService : IMapPointsService
             Payload = JsonConvert.SerializeObject(mapPointDto)
         };
         await _publisher.PublishAsync(message);
-        await _loggingService.LogInformationAsync("New Map Endpoint added successfully");
+        //_logger.Log(LogLevel.Information, "New Map Point creation started");
     }
 }

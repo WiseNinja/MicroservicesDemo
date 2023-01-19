@@ -1,7 +1,7 @@
-﻿using Common.Connectivity;
+﻿using Connectivity;
 using EasyNetQ;
 
-namespace Common.Infrastructure.RabbitMQ;
+namespace Infrastructure.RabbitMQ;
 
 public class RabbitMqPublisher : IPublisher
 {

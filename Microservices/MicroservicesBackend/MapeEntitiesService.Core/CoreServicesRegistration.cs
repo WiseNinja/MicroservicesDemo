@@ -10,7 +10,6 @@ public static class CoreServicesRegistration
     {
         services.AddScoped<IMapPointsService, MapPointsService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
         return services;
     }
 }

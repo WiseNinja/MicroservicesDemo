@@ -1,4 +1,4 @@
-﻿using Common.Infrastructure;
+﻿using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NotificationsService;
@@ -13,7 +13,4 @@ var host = Host.CreateDefaultBuilder(args)
 
 var messagesHandler = host.Services.GetRequiredService<MessagesHandler>();
 await messagesHandler.HandleMessagesAsync();
-while (true)
-{
-
-}
+Console.ReadLine();

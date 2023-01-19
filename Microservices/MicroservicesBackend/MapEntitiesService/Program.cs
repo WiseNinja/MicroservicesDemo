@@ -1,4 +1,4 @@
-using Common.Infrastructure;
+using Infrastructure;
 using MapEntitiesService.Core;
 
 var builder = WebApplication.CreateBuilder(args);

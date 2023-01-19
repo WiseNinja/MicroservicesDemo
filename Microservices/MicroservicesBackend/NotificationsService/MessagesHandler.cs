@@ -1,4 +1,5 @@
 ﻿using Common.Connectivity;
+using Connectivity;
 
 namespace NotificationsService;
 
@@ -13,6 +14,11 @@ public class MessagesHandler
 
     public async Task HandleMessagesAsync()
     {
-        await _subscriber.SubscribeAsync();
+        await _subscriber.SubscribeAsync(HandleMessage);
+    }
+
+    private void HandleMessage(string obj)
+    {
+       
     }
 }

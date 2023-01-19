@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Connectivity\Common.Connectivity.csproj" />
-    <ProjectReference Include="..\Common.Connectivity\Common.Connectivity.csproj" />
-    <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Common.Connectivity\Connectivity.csproj" />
+    <ProjectReference Include="..\Common.Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

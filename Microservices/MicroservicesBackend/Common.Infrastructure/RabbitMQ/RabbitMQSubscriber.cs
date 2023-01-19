@@ -1,7 +1,7 @@
-﻿using Common.Connectivity;
+﻿using Connectivity;
 using EasyNetQ;
 
-namespace Common.Infrastructure.RabbitMQ;
+namespace Infrastructure.RabbitMQ;
 
 public class RabbitMqSubscriber : ISubscriber
 {
@@ -10,10 +10,10 @@ public class RabbitMqSubscriber : ISubscriber
     {
         _bus = RabbitHutch.CreateBus("host=rabbitmq");
     }
-    public async Task SubscribeAsync()
+    public async Task SubscribeAsync(Action<string> handleMessage)
     {
         await _bus.PubSub.SubscribeAsync<Message>(
-            "my_subscription_id", msg => Console.WriteLine(msg.MessageType)
-        );
+            "my_subscription_id", msg => handleMessage(msg.Payload));
     }
+
 }

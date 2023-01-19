@@ -1,4 +1,4 @@
-﻿namespace Common.Connectivity;
+﻿namespace Connectivity;
 
 public interface IPublisher
 { 
