@@ -1,29 +1,31 @@
-﻿using MapEntitiesService.Core.DTOs;
+﻿using Common.Connectivity;
+using Common.Connectivity.Enums;
+using Common.Logging;
+using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
-using MapEntitiesService.Core.Messages;
+using Newtonsoft.Json;
 
-namespace MapEntitiesService.Core.Features.MapPoints
+namespace MapEntitiesService.Core.Features.MapPoints;
+
+public class MapPointsService : IMapPointsService
 {
-    public class MapPointsService : IMapPointsService
-    {
-        private readonly ILoggingService _loggingService;
-        private readonly IMessageServiceClient _messageServiceClient;
+    private readonly ILoggingService _loggingService;
+    private readonly IPublisher _publisher;
 
-        public MapPointsService(ILoggingService loggingService, IMessageServiceClient messageServiceClient)
+    public MapPointsService(ILoggingService loggingService, IPublisher publisher)
+    {
+        _loggingService = loggingService;
+        _publisher = publisher;
+    }
+    public async Task AddNewMapPointAsync(MapPointDto mapPointDto)
+    {
+        Message message = new Message
         {
-            _loggingService = loggingService;
-            _messageServiceClient = messageServiceClient;
-        }
-        public async Task AddNewMapPoint(MapPointDto mapPointDto)
-        {
-            MapPointAddedMessage mapPointAddedMessage = new MapPointAddedMessage
-            {
-                MessageId = Guid.NewGuid().ToString(),
-                MapPoint = mapPointDto
-            };
-            
-            await _messageServiceClient.SendMessage(mapPointAddedMessage);
-            await _loggingService.Log("New Map Endpoint added successfully");
-        }
+            MessageId = Guid.NewGuid(),
+            MessageType = MessageType.AddMapPoint,
+            Payload = JsonConvert.SerializeObject(mapPointDto)
+        };
+        await _publisher.PublishAsync(message);
+        await _loggingService.LogInformationAsync("New Map Endpoint added successfully");
     }
 }

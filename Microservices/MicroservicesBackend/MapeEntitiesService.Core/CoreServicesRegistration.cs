@@ -1,14 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MapEntitiesService.Core.Features.MapPoints;
+using MapEntitiesService.Core.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace MapEntitiesService.Core
+namespace MapEntitiesService.Core;
+
+public static class CoreServicesRegistration
 {
-    public static class CoreServicesRegistration
+    public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddCoreServices(this IServiceCollection services)
-        {
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddScoped<IMapPointsService, MapPointsService>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            return services;
-        }
+        return services;
     }
 }

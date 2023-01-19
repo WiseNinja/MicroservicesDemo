@@ -9,6 +9,14 @@ services:
     networks:
         - default
 
+  notificationsservice:
+    image: ${DOCKER_REGISTRY-}notificationsservice
+    build:
+      context: .
+      dockerfile: NotificationsService/Dockerfile
+    networks:
+        - default
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: 'rabbitmq'
@@ -18,15 +26,7 @@ services:
     networks:
         - default
 
-  notificationsservice:
-    image: ${DOCKER_REGISTRY-}notificationsservice
-    build:
-      context: .
-      dockerfile: NotificationsService/Dockerfile
-    networks:
-    - default
-
 networks:
   default:
-    driver: default
+    driver: bridge
 

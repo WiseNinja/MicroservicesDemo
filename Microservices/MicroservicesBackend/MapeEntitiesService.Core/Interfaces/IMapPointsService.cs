@@ -1,9 +1,8 @@
 ﻿using MapEntitiesService.Core.DTOs;
 
-namespace MapEntitiesService.Core.Interfaces
+namespace MapEntitiesService.Core.Interfaces;
+
+public interface IMapPointsService
 {
-    public interface IMapPointsService
-    {
-        Task AddNewMapPoint(MapPointDto mapPointDto);
-    }
+    Task AddNewMapPointAsync(MapPointDto mapPointDto);
 }
