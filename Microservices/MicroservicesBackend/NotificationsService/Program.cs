@@ -1,16 +1,29 @@
-﻿using Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
+using Infrastructure;
 using Microsoft.Extensions.Hosting;
 using NotificationsService;
+using NotificationsService.Hubs;
 
-var host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
-    {
-        services.AddScoped<MessagesHandler>();
-        services.AddInfrastructureServices();
-    })
-    .Build();
+var builder = WebApplication.CreateBuilder(args);
 
-var messagesHandler = host.Services.GetRequiredService<MessagesHandler>();
-await messagesHandler.HandleMessagesAsync();
-Console.ReadLine();
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<MessagesHandler>();
+builder.Services.AddInfrastructureServices();
+builder.Services.AddSignalR();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+app.MapHub<MapEntitiesHub>("/mapEntitiesHub");
+
+MessagesHandler messagesHandler = app.Services.GetRequiredService<MessagesHandler>();
+await messagesHandler.SubscribeAsync();
+
+app.Run();
