@@ -1,5 +1,6 @@
 ﻿using Connectivity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using NotificationsService.Hubs;
 
 namespace NotificationsService;
@@ -19,14 +20,27 @@ public class MessagesHandler
 
     public async Task SubscribeAsync()
     {
-        await _subscriber.SubscribeAsync(HandleMessage);
-        _logger.Log(LogLevel.Information, "Subscribed to message broker");
+        try
+        {
+            await _subscriber.SubscribeAsync(HandleMessage);
+            _logger.LogInformation("Subscribed to message broker");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred during subscription to the message broker, details: {ex}");
+        }
     }
 
     private async void HandleMessage(string message)
     {
-        throw new ApplicationException("test3");
-        await _hubContext.Clients.All.SendAsync("MapPointAdded", message);
-        _logger.Log(LogLevel.Information, "Sent Map Point Added notification to clients");
+        try
+        {
+            await _hubContext.Clients.All.SendAsync("MapPointAdded", message);
+            _logger.LogInformation( "Sent Map Point Added notification to clients");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred during handling a message from the message broker, details: {ex}");
+        }
     }
 }

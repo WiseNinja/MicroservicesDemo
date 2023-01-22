@@ -1,9 +1,9 @@
 using Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
 using NotificationsService;
-using NotificationsService.ExceptionHandling;
 using NotificationsService.Hubs;
 using Serilog;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
+using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 app.MapHub<MapEntitiesHub>("/mapEntitiesHub");
 app.UseSerilogRequestLogging();
-app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILogger>());
+
 MessagesHandler messagesHandler = app.Services.GetRequiredService<MessagesHandler>();
 await messagesHandler.SubscribeAsync();
 

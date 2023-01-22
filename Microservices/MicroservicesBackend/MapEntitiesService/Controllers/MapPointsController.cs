@@ -23,7 +23,7 @@ public class MapPointsController : ControllerBase
     public async Task<ActionResult> SetNewMapPoint([FromBody] MapPointDto mapPointDto)
     {
         await _mapPointsService.AddNewMapPointAsync(mapPointDto);
-        _logger.Log(LogLevel.Information, $"Added a new map point - Name:{mapPointDto.Name}, X: {mapPointDto.X}, Y: {mapPointDto.Y}");
+        _logger.LogInformation( $"Added a new map point - Name:{mapPointDto.Name}, X: {mapPointDto.X}, Y: {mapPointDto.Y}");
         return Ok();
     }
 }
