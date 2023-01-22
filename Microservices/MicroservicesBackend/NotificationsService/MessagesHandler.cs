@@ -25,6 +25,7 @@ public class MessagesHandler
 
     private async void HandleMessage(string message)
     {
+        throw new ApplicationException("test3");
         await _hubContext.Clients.All.SendAsync("MapPointAdded", message);
         _logger.Log(LogLevel.Information, "Sent Map Point Added notification to clients");
     }

@@ -1,5 +1,6 @@
 using Infrastructure;
 using MapEntitiesService.Core;
+using MapEntitiesService.ExceptionHandling;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseSerilogRequestLogging();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 
