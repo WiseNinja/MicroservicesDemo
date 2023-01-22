@@ -19,9 +19,8 @@ public class MapPointsController : ControllerBase
         _mapper = mapper;
     }
     [HttpPost(Name = "SetNewMapPoint")]
-    public async Task<ActionResult> SetNewMapPoint([FromBody] MapPointVm mapPointVm)
+    public async Task<ActionResult> SetNewMapPoint([FromBody] MapPointDto mapPointDto)
     {
-        MapPointDto mapPointDto = _mapper.Map<MapPointDto>(mapPointVm);
         await _mapPointsService.AddNewMapPointAsync(mapPointDto);
         return Ok();
     }

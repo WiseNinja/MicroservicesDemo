@@ -2,7 +2,6 @@
 using Connectivity;
 using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace MapEntitiesService.Core.Features.MapPoints;

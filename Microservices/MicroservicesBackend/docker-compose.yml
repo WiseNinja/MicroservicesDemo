@@ -26,6 +26,22 @@ services:
     networks:
         - default
 
+  seq:
+    image: datalust/seq:latest
+    container_name: 'seq'
+    ports:
+      - "80:80"
+      - "5341:5341"
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - seq-data:/data
+    networks:
+      - default
+
+volumes:
+  seq-data:
+
 networks:
   default:
     driver: bridge
