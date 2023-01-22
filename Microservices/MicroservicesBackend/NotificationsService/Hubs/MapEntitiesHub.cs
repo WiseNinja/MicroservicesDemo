@@ -9,9 +9,5 @@ namespace NotificationsService.Hubs
 {
     public class MapEntitiesHub : Hub
     {
-        public async Task BroadcastMessage(string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", message);
-        }
     }
 }

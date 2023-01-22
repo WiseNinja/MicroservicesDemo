@@ -1,5 +1,4 @@
-﻿using Common.Connectivity;
-using Connectivity;
+﻿using Connectivity;
 using Microsoft.AspNetCore.SignalR;
 using NotificationsService.Hubs;
 
@@ -23,6 +22,6 @@ public class MessagesHandler
 
     private async void HandleMessage(string message)
     {
-        await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+        await _hubContext.Clients.All.SendAsync("MapPointAdded", message);
     }
 }

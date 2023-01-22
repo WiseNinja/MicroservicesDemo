@@ -1,5 +1,4 @@
 using Infrastructure;
-using Microsoft.Extensions.Hosting;
 using NotificationsService;
 using NotificationsService.Hubs;
 
