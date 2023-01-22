@@ -2,6 +2,7 @@
 using Connectivity;
 using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace MapEntitiesService.Core.Features.MapPoints;
@@ -9,11 +10,12 @@ namespace MapEntitiesService.Core.Features.MapPoints;
 public class MapPointsService : IMapPointsService
 {
     private readonly IPublisher _publisher;
+    private readonly ILogger<MapPointsService> _logger;
 
-    public MapPointsService(IPublisher publisher)
+    public MapPointsService(IPublisher publisher, ILogger<MapPointsService> logger)
     {
-        //_logger = logger;
         _publisher = publisher;
+        _logger = logger;
     }
     public async Task AddNewMapPointAsync(MapPointDto mapPointDto)
     {
@@ -24,6 +26,6 @@ public class MapPointsService : IMapPointsService
             Payload = JsonConvert.SerializeObject(mapPointDto)
         };
         await _publisher.PublishAsync(message);
-        //_logger.Log(LogLevel.Information, "New Map Point creation started");
+        _logger.Log(LogLevel.Information, "New Map Point creation started");
     }
 }

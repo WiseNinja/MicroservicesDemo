@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
-using MapEntitiesService.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MapEntitiesService.Controllers;
