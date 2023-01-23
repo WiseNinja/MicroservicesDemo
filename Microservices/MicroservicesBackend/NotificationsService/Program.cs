@@ -15,6 +15,7 @@ builder.Services.AddSingleton<MessagesHandler>();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddSignalR();
 builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -24,6 +25,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
+
 app.MapHub<MapEntitiesHub>("/mapEntitiesHub");
 app.UseSerilogRequestLogging();
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
 var connection = new HubConnectionBuilder()
-    .WithUrl("http://localhost:50060/MapEntitiesHub")
+    .WithUrl("http://localhost:5003/MapEntitiesHub")
     .Build();
 
 await connection.StartAsync();

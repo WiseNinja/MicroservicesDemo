@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: MapEntitiesService/Dockerfile
     networks:
-        - default
+        - microserviceDemoNetwork
 
   notificationsservice:
     image: ${DOCKER_REGISTRY-}notificationsservice
@@ -15,7 +15,17 @@ services:
       context: .
       dockerfile: NotificationsService/Dockerfile
     networks:
-        - default
+        - microserviceDemoNetwork
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: OcelotApiGw/Dockerfile
+    ports:
+      - "5003:80"
+    networks:
+        - microserviceDemoNetwork
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -24,7 +34,7 @@ services:
         - 5672:5672
         - 15672:15672
     networks:
-        - default
+        - microserviceDemoNetwork
 
   seq:
     image: datalust/seq:latest
@@ -37,12 +47,12 @@ services:
     volumes:
       - seq-data:/data
     networks:
-      - default
+      - microserviceDemoNetwork
 
 volumes:
   seq-data:
 
 networks:
-  default:
+  microserviceDemoNetwork:
     driver: bridge
 
