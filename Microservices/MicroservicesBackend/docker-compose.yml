@@ -17,6 +17,14 @@ services:
     networks:
         - microserviceDemoNetwork
 
+  mapsrepositoryservice:
+    image: ${DOCKER_REGISTRY-}mapsrepositoryservice
+    build:
+      context: .
+      dockerfile: MapsRepositoryService/Dockerfile
+    networks:
+        - microserviceDemoNetwork
+
   ocelotapigw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
     build:
@@ -49,8 +57,23 @@ services:
     networks:
       - microserviceDemoNetwork
 
+  minio:
+    image: minio/minio
+    container_name: 'minio'
+    command: server /data
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    volumes:
+      - data:/data
+    networks:
+      - microserviceDemoNetwork
+
 volumes:
   seq-data:
+  data:
 
 networks:
   microserviceDemoNetwork:

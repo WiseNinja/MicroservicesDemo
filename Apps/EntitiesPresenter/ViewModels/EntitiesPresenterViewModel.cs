@@ -7,52 +7,51 @@ using System.Windows;
 using EntitiesPresenter.DTOs;
 using EntitiesPresenter.Interfaces;
 using EntitiesPresenter.Models;
+using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
-using XDMessaging;
 
 namespace EntitiesPresenter.ViewModels
 {
     public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPropertyChanged
     {
-        private readonly IXDListener _listener;
         public ObservableCollection<EntityModel> EntitiesToShowInCanvas { get; set; }
 
-        public EntitiesPresenterViewModel(XDMessagingClient client)
+        public EntitiesPresenterViewModel()
         {
             EntitiesToShowInCanvas = new ObservableCollection<EntityModel>();
-            _listener = client.Listeners
-                .GetListenerForMode(XDTransportMode.HighPerformanceUI);
-            _listener.RegisterChannel("entityDetails");
             Subscribe();
         }
 
-        public void Subscribe()
+        public async void Subscribe()
         {
             try
             {
-                _listener.MessageReceived += (o, e) =>
-                {
-                    if (e.DataGram.Channel == "entityDetails")
-                    {
-                        EntityDetailsDto? receivedEntityDto = JsonConvert.DeserializeObject<EntityDetailsDto>(e.DataGram.Message);
-                        if (receivedEntityDto != null)
-                        {
-                            EntityModel entityModel = new EntityModel
-                            {
-                                Name = receivedEntityDto.Name,
-                                X = receivedEntityDto.X,
-                                Y = receivedEntityDto.Y
-                            };
-                            Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
-                            OnPropertyChanged(nameof(EntitiesToShowInCanvas));
-                        }
-                        else
-                        {
-                            Console.WriteLine("Was not able to deserialize entity details");
-                        }
+                var connection = new HubConnectionBuilder()
+                    .WithUrl("http://localhost:5003/MapEntitiesHub")
+                    .Build();
 
+                await connection.StartAsync();
+
+
+                connection.On<string>("MapPointAdded", (message) =>
+                {
+                    EntityDetailsDto? receivedEntityDto = JsonConvert.DeserializeObject<EntityDetailsDto>(message);
+                    if (receivedEntityDto != null)
+                    {
+                        EntityModel entityModel = new EntityModel
+                        {
+                            Name = receivedEntityDto.Name,
+                            X = receivedEntityDto.X,
+                            Y = receivedEntityDto.Y
+                        };
+                        Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
+                        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
                     }
-                };
+                    else
+                    {
+                        Console.WriteLine("Was not able to deserialize entity details");
+                    }
+                });
             }
             catch (Exception ex)
             {

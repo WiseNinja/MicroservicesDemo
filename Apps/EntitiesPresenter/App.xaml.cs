@@ -3,7 +3,6 @@ using System.Windows;
 using EntitiesPresenter.Interfaces;
 using EntitiesPresenter.ViewModels;
 using Microsoft.Extensions.Hosting;
-using XDMessaging;
 
 namespace EntitiesPresenter
 {
@@ -21,7 +20,6 @@ namespace EntitiesPresenter
                 {
                     services.AddSingleton<MainWindow>();
                     services.AddTransient<IEntitiesPresenterViewModel, EntitiesPresenterViewModel>();
-                    services.AddTransient<XDMessagingClient>();
                 })
                 .Build();
         }
