@@ -29,9 +29,9 @@ public class ExceptionHandlingMiddleware
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
-        var response = context.Response;
+        HttpResponse response = context.Response;
 
-        var errorResponse = new ErrorResponse
+        ErrorResponse errorResponse = new ErrorResponse
         {
             Success = false
         };
@@ -53,7 +53,7 @@ public class ExceptionHandlingMiddleware
                 break;
         }
         _logger.LogError($"An error occurred, details:{exception}");
-        var result = JsonSerializer.Serialize(errorResponse);
+        string result = JsonSerializer.Serialize(errorResponse);
         await context.Response.WriteAsync(result);
     }
 }

@@ -3,16 +3,17 @@ using MapsRepositoryService.Infrastructure.MinIO.Helpers;
 
 namespace MapsRepositoryService.Infrastructure.MinIO.Queries;
 
-internal class GetAllMapsQuery : IGetAllMapsQuery
+public class GetMapDataQuery : IGetMapDataQuery
 {
     private readonly FileOperationsHelper _fileOperationsHelper;
 
-    public GetAllMapsQuery(FileOperationsHelper fileOperationsHelper)
+    public GetMapDataQuery(FileOperationsHelper fileOperationsHelper)
     {
         _fileOperationsHelper = fileOperationsHelper;
     }
-    public async Task<List<string>> GetAllMapNamesAsync()
+
+    public async Task<string> GetMapDataByNameAsync(string mapName)
     {
-        return await _fileOperationsHelper.GetAllFileNamesFromBucketAsync("maps-bucket");
+        return await _fileOperationsHelper.GetFileDataAsBase64(mapName,"maps-bucket");
     }
 }

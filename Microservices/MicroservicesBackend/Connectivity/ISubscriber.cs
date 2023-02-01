@@ -1,7 +1,6 @@
-﻿namespace Connectivity
+﻿namespace Connectivity;
+
+public interface ISubscriber
 {
-    public interface ISubscriber
-    {
-        Task SubscribeAsync(Action<string> handleMessage);
-    }
+    Task SubscribeAsync(Action<string> handleMessage);
 }

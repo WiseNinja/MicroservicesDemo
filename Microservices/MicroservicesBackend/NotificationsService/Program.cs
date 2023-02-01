@@ -1,11 +1,9 @@
 using Infrastructure;
-using Microsoft.AspNetCore.Diagnostics;
 using NotificationsService;
 using NotificationsService.Hubs;
 using Serilog;
-using static System.Net.Mime.MediaTypeNames;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,7 +15,7 @@ builder.Services.AddSignalR();
 builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
 builder.Services.AddCors();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -2,15 +2,14 @@
 using Infrastructure.RabbitMQ;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+public static class InfrastructureServicesRegistration
 {
-    public static class InfrastructureServicesRegistration
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
-        {
-            services.AddSingleton<IPublisher, RabbitMqPublisher>();
-            services.AddSingleton<ISubscriber, RabbitMqSubscriber>();
-            return services;
-        }
+        services.AddSingleton<IPublisher, RabbitMqPublisher>();
+        services.AddSingleton<ISubscriber, RabbitMqSubscriber>();
+        return services;
     }
 }

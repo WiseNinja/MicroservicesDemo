@@ -1,9 +1,7 @@
-using MapsRepositoryService;
 using MapsRepositoryService.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -18,7 +16,7 @@ builder.Services.AddCors(policyBuilder =>
 
 builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 app.UseCors();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

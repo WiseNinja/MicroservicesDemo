@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MapsRepositoryService.Core.DTOs;
 
-namespace MapsRepositoryService.Core.DB.Commands
+namespace MapsRepositoryService.Core.DB.Commands;
+
+public interface IInsertMapCommand
 {
-    public interface IInsertMapCommand
-    {
-    }
+    Task InsertMapAsync(MapDto mapDto);
 }

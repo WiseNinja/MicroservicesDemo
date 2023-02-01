@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MinIO\Commands\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Aspose.Drawing" Version="23.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageReference Include="Minio" Version="4.0.7" />
+    <PackageReference Include="Minio.AspNetCore" Version="4.0.6" />
   </ItemGroup>
 
   <ItemGroup>

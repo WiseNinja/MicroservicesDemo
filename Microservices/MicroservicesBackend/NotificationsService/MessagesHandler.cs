@@ -1,6 +1,5 @@
 ﻿using Connectivity;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
 using NotificationsService.Hubs;
 
 namespace NotificationsService;
