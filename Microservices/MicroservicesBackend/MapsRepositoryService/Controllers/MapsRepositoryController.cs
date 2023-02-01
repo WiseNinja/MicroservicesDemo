@@ -122,4 +122,34 @@ public class MapsRepositoryController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
         }
     }
+
+    [HttpGet(Name = "GetMissionMapData")]
+    public async Task<ActionResult> GetMissionMapData(string mapName)
+    {
+        try
+        {
+          //  string mapData = await _getMapDataQuery.GetMapDataByNameAsync(mapName);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
+        }
+    }
+
+    [HttpGet(Name = "GetMissionMapName")]
+    public async Task<ActionResult> GetMissionMapName()
+    {
+        try
+        {
+            //string mapData = await _getMapDataQuery.GetMapDataByNameAsync(mapName);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
+        }
+    }
 }
