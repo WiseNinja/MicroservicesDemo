@@ -35,7 +35,8 @@ public class MessagesHandler
         try
         {
             await _hubContext.Clients.All.SendAsync("MapPointAdded", message);
-            _logger.LogInformation( "Sent Map Point Added notification to clients");
+            await _hubContext.Clients.All.SendAsync("MissionMapSet", message);
+            _logger.LogInformation("Sent all notifications to clients");
         }
         catch (Exception ex)
         {

@@ -1,8 +1,12 @@
-﻿using MapsRepositoryService.Core.DB.Commands;
+﻿using Common.Connectivity.Enums;
+using Connectivity;
+using MapsRepositoryService.Core.DB.Commands;
 using MapsRepositoryService.Core.DB.Queries;
 using MapsRepositoryService.Core.DTOs;
 using MapsRepositoryService.Infrastructure.MinIO.Queries;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Newtonsoft.Json;
 
 namespace MapsRepositoryService.Controllers;
 
@@ -16,13 +20,15 @@ public class MapsRepositoryController : ControllerBase
     private readonly IGetAllMapsQuery _getAllMapsQuery;
     private readonly IGetMapDataQuery _getMapDataQuery;
     private readonly ISetMissionMapCommand _setMissionMapCommand;
+    private readonly IPublisher _publisher;
 
     public MapsRepositoryController(ILogger<MapsRepositoryController> logger,
         IInsertMapCommand insertMapCommand,
         IDeleteMapCommand deleteMapCommand,
         IGetAllMapsQuery getAllMapsQuery,
         IGetMapDataQuery getMapDataQuery,
-        ISetMissionMapCommand setMissionMapCommand)
+        ISetMissionMapCommand setMissionMapCommand,
+        IPublisher publisher)
     {
         _logger = logger;
         _insertMapCommand = insertMapCommand;
@@ -30,6 +36,7 @@ public class MapsRepositoryController : ControllerBase
         _getAllMapsQuery = getAllMapsQuery;
         _getMapDataQuery = getMapDataQuery;
         _setMissionMapCommand = setMissionMapCommand;
+        _publisher = publisher;
     }
 
     [HttpPost(Name = "UploadMap")]
@@ -70,6 +77,13 @@ public class MapsRepositoryController : ControllerBase
         try
         {
             await _setMissionMapCommand.SetMainMissionMapAsync(missionMap.Name);
+            Message message = new Message
+            {
+                MessageId = Guid.NewGuid(),
+                MessageType = MessageType.MissionMapSet,
+                Payload = JsonConvert.SerializeObject(missionMap)
+            };
+            await _publisher.PublishAsync(message);
             return Ok();
         }
         catch (Exception ex)

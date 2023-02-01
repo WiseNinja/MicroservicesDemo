@@ -2,5 +2,6 @@
 
 public enum MessageType
 {
-    AddMapPoint = 0
+    AddMapPoint = 0,
+    MissionMapSet = 1
 }

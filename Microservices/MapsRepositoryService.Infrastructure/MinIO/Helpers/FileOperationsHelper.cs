@@ -30,6 +30,7 @@ public class FileOperationsHelper
         catch (MinioException ex)
         {
             _logger.LogError($"A MinIO exception occurred during file upload, details: {ex}");
+            throw ex;
         }
     }
 
@@ -46,6 +47,7 @@ public class FileOperationsHelper
         catch (MinioException ex)
         {
             _logger.LogError($"A MinIO exception occurred during file deletion, details: {ex}");
+            throw ex;
         }
     }
     public async Task<List<string>> GetAllFileNamesFromBucketAsync(string bucketName)
@@ -54,7 +56,6 @@ public class FileOperationsHelper
         try
         {
             TaskCompletionSource<object> done = new TaskCompletionSource<object>();
-            Console.WriteLine("Running example for API: ListObjectsAsync");
             ListObjectsArgs? listArgs = new ListObjectsArgs()
                 .WithBucket(bucketName);
 
@@ -68,6 +69,7 @@ public class FileOperationsHelper
         catch (MinioException ex)
         {
             _logger.LogError($"A MinIO exception occurred during fetching of all file names from bucket {bucketName}, details: {ex}");
+            throw ex;
         }
 
         return allFileNames;
@@ -87,22 +89,42 @@ public class FileOperationsHelper
         catch (MinioException ex)
         {
             _logger.LogError($"A MinIO exception occurred during fetching of file data for file: {objectName} from bucket: {bucketName}, details: {ex}");
+            throw ex;
         }
         return fileData;
     }
-    #endregion
 
     public async Task CopyFileToBucketAsync(string fileName, string sourceBucketName, string destBucketName)
     {
         try
         {
-            await CreateBucketIfNotExists(destBucketName);
-
-            var cpSrcArgs = new CopySourceObjectArgs()
+            BucketExistsArgs? beArgs = new BucketExistsArgs()
+                .WithBucket(destBucketName);
+            bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
+            if (found)
+            {
+                //clean up bucket as we only want to have one file at all times in destination
+                List<string> filesToDelete = await GetAllFileNamesFromBucketAsync(destBucketName);
+                RemoveObjectsArgs? objArgs = new RemoveObjectsArgs()
+                    .WithBucket(destBucketName)
+                    .WithObjects(filesToDelete);
+                IObservable<DeleteError>? objectsOservable = await _minioClient.RemoveObjectsAsync(objArgs).ConfigureAwait(false);
+                objectsOservable.Subscribe(
+                    objDeleteError => _logger.LogInformation($"Object: {objDeleteError.Key}"),
+                    ex => _logger.LogError($"OnError: {ex}"),
+                    () => { _logger.LogInformation($"Removed objects in list from {destBucketName}\n"); });
+            }
+            else
+            {
+                MakeBucketArgs? mbArgs = new MakeBucketArgs()
+                    .WithBucket(destBucketName);
+                await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
+            }
+            CopySourceObjectArgs? cpSrcArgs = new CopySourceObjectArgs()
                 .WithBucket(sourceBucketName)
                 .WithObject(fileName);
 
-            var args = new CopyObjectArgs()
+            CopyObjectArgs? args = new CopyObjectArgs()
                 .WithBucket(destBucketName)
                 .WithObject(fileName)
                 .WithCopyObjectSource(cpSrcArgs);
@@ -112,8 +134,12 @@ public class FileOperationsHelper
         catch (MinioException ex)
         {
             _logger.LogError($"A MinIO exception occurred during copying of file {fileName} from bucket: {sourceBucketName} to {destBucketName}, details: {ex}");
+            throw ex;
         }
     }
+
+    #endregion
+
     #region Private Methods
     private async Task UploadFileToBucket(string fileName, string fileData, string bucketName)
     {

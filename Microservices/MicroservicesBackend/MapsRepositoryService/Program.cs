@@ -1,3 +1,4 @@
+using Infrastructure;
 using MapsRepositoryService.Infrastructure;
 using Serilog;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRepositoryInfrastructureServices();
+builder.Services.AddInfrastructureServices();
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

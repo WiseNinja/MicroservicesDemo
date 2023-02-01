@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MapsRepositoryService.Infrastructure\MapsRepositoryService.Infrastructure.csproj" />
+    <ProjectReference Include="..\Connectivity\Connectivity.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

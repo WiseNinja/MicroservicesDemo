@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using EntitiesPresenter.DTOs;
 using EntitiesPresenter.Interfaces;
@@ -30,28 +31,58 @@ namespace EntitiesPresenter.ViewModels
                     .WithUrl("http://localhost:5003/MapEntitiesHub")
                     .Build();
 
-                await connection.StartAsync();
-
-
                 connection.On<string>("MapPointAdded", (message) =>
-                {
-                    EntityDetailsDto? receivedEntityDto = JsonConvert.DeserializeObject<EntityDetailsDto>(message);
-                    if (receivedEntityDto != null)
                     {
-                        EntityModel entityModel = new EntityModel
+                        try
                         {
-                            Name = receivedEntityDto.Name,
-                            X = receivedEntityDto.X,
-                            Y = receivedEntityDto.Y
-                        };
-                        Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
-                        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
-                    }
-                    else
+                            EntityDetailsDto? receivedEntityDto =
+                                JsonConvert.DeserializeObject<EntityDetailsDto>(message);
+                            if (receivedEntityDto != null)
+                            {
+                                EntityModel entityModel = new EntityModel
+                                {
+                                    Name = receivedEntityDto.Name,
+                                    X = receivedEntityDto.X,
+                                    Y = receivedEntityDto.Y
+                                };
+                                Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
+                                OnPropertyChanged(nameof(EntitiesToShowInCanvas));
+                            }
+                            else
+                            {
+                                Console.WriteLine("Was not able to deserialize entity details");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error while deserializing entity details");
+                        }
+                    });
+                connection.On<string>("MissionMapSet", (message) =>
+                {
+                    try
                     {
-                        Console.WriteLine("Was not able to deserialize entity details");
+                        MissionMapDto? receivedMissionMapDto = JsonConvert.DeserializeObject<MissionMapDto>(message);
+                        if (receivedMissionMapDto != null)
+                        {
+                            MissionMapModel missionMapModel = new MissionMapModel
+                            {
+                                Name = receivedMissionMapDto.Name,
+                            };
+                            //Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
+                            //OnPropertyChanged(nameof(EntitiesToShowInCanvas));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Was not able to deserialize mission map");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error while deserializing mission map");
                     }
                 });
+                await connection.StartAsync();
             }
             catch (Exception ex)
             {
