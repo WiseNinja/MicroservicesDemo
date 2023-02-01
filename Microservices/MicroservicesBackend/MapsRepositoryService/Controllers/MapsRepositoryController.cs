@@ -148,8 +148,8 @@ public class MapsRepositoryController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
+            //_logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
+            //return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
         }
     }
 }
