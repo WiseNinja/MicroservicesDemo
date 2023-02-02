@@ -14,6 +14,7 @@ public static class InfrastructureServicesRegistration
     {
         services.AddScoped<IGetAllMapsQuery, GetAllMapsQuery>();
         services.AddScoped<IGetMapDataQuery, GetMapDataQuery>();
+        services.AddScoped<IGetMissionMapNameQuery, GetMissionMapNameQuery>();
         services.AddScoped<IInsertMapCommand, InsertMapCommand>();
         services.AddScoped<IDeleteMapCommand, DeleteMapCommand>();
         services.AddScoped<ISetMissionMapCommand, SetMissionMapCommand>();

@@ -3,9 +3,7 @@ using Connectivity;
 using MapsRepositoryService.Core.DB.Commands;
 using MapsRepositoryService.Core.DB.Queries;
 using MapsRepositoryService.Core.DTOs;
-using MapsRepositoryService.Infrastructure.MinIO.Queries;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Newtonsoft.Json;
 
 namespace MapsRepositoryService.Controllers;
@@ -19,14 +17,16 @@ public class MapsRepositoryController : ControllerBase
     private readonly IDeleteMapCommand _deleteMapCommand;
     private readonly IGetAllMapsQuery _getAllMapsQuery;
     private readonly IGetMapDataQuery _getMapDataQuery;
+    private readonly IGetMissionMapNameQuery _getMissionMapNameQuery;
     private readonly ISetMissionMapCommand _setMissionMapCommand;
     private readonly IPublisher _publisher;
 
     public MapsRepositoryController(ILogger<MapsRepositoryController> logger,
-        IInsertMapCommand insertMapCommand,
-        IDeleteMapCommand deleteMapCommand,
         IGetAllMapsQuery getAllMapsQuery,
         IGetMapDataQuery getMapDataQuery,
+        IGetMissionMapNameQuery getMissionMapNameQuery,
+        IInsertMapCommand insertMapCommand,
+        IDeleteMapCommand deleteMapCommand,
         ISetMissionMapCommand setMissionMapCommand,
         IPublisher publisher)
     {
@@ -35,6 +35,7 @@ public class MapsRepositoryController : ControllerBase
         _deleteMapCommand = deleteMapCommand;
         _getAllMapsQuery = getAllMapsQuery;
         _getMapDataQuery = getMapDataQuery;
+        _getMissionMapNameQuery = getMissionMapNameQuery;
         _setMissionMapCommand = setMissionMapCommand;
         _publisher = publisher;
     }
@@ -123,33 +124,18 @@ public class MapsRepositoryController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "GetMissionMapData")]
-    public async Task<ActionResult> GetMissionMapData(string mapName)
-    {
-        try
-        {
-          //  string mapData = await _getMapDataQuery.GetMapDataByNameAsync(mapName);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
-        }
-    }
-
     [HttpGet(Name = "GetMissionMapName")]
     public async Task<ActionResult> GetMissionMapName()
     {
         try
         {
-            //string mapData = await _getMapDataQuery.GetMapDataByNameAsync(mapName);
-            return Ok();
+            string missionMapName = await _getMissionMapNameQuery.GetMissionMapNameAsync();
+            return Ok(missionMapName);
         }
         catch (Exception ex)
         {
-            //_logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
-            //return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
+            _logger.LogError($"A general exception occurred while trying to fetch mission map name, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to fetch mission map name");
         }
     }
 }

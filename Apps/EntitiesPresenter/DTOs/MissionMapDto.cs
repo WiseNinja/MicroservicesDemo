@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace EntitiesPresenter.DTOs;
 
-namespace EntitiesPresenter.DTOs
+public class MissionMapDto
 {
-    public class MissionMapDto
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

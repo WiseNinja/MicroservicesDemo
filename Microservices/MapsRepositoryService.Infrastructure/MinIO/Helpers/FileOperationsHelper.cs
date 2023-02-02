@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.Exceptions;
 using Minio.DataModel;
-using System.Security.AccessControl;
-using System.Text;
 
 namespace MapsRepositoryService.Infrastructure.MinIO.Helpers;
 
@@ -50,6 +48,7 @@ public class FileOperationsHelper
             throw ex;
         }
     }
+
     public async Task<List<string>> GetAllFileNamesFromBucketAsync(string bucketName)
     {
         List<string> allFileNames = new List<string>();
