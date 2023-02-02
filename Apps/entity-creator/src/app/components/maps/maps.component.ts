@@ -72,7 +72,7 @@ export class MapsComponent implements OnInit {
 
   setMissionMap() {
     let missionMapDto = new MissionMapDto();
-    missionMapDto.name = this.selectedMap;
+    missionMapDto.missionMapName = this.selectedMap;
 
     this.setMissionMapSub = this.mapsService.setMissionMap(missionMapDto).subscribe({
       next: x => {

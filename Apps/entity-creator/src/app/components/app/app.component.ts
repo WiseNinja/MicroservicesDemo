@@ -27,5 +27,5 @@ export class AppComponent {
         this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
     });
   }
-  title = 'test-app2';
+  title = 'entity-creator';
 }
