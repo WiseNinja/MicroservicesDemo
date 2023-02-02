@@ -6,6 +6,7 @@ let win;
 function createWindow() {
   win = new BrowserWindow({ width: 800, height: 600 });
   // load the dist folder from Angular
+  win.removeMenu();
   win.loadURL(
     url.format({
       pathname: path.join(__dirname, '/dist/index.html'), // compiled verion of our app
