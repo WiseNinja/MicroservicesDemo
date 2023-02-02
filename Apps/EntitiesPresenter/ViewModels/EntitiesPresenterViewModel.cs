@@ -91,9 +91,11 @@ public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPr
                     {
                         await Application.Current.Dispatcher.Invoke(async () =>
                         {
-                            MissionMap = await GetMissionMapImageAsync(receivedMissionMapDto.Name);
+                            MissionMap = await GetMissionMapImageAsync(receivedMissionMapDto.MissionMapName);
+                            EntitiesToShowInCanvas.Clear();
                         });
                         OnPropertyChanged(nameof(MissionMap));
+                        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
                     }
                     else
                     {
