@@ -1,0 +1,26 @@
+<div class="example-container">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter point name</mat-label>
+            <input matInput [formControl]="name" required>
+            <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter X coordinate</mat-label>
+            <input matInput [formControl]="xCoordinate" required>
+            <mat-error *ngIf="xCoordinate.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter Y coordinate</mat-label>
+            <input matInput [formControl]="yCoordinate" required>
+            <mat-error *ngIf="yCoordinate.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button (click)="sendEntity()">Send</button>
+    </div>
+</div>

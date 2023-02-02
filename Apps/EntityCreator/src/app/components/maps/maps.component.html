@@ -1,0 +1,28 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>
+        <div>
+            <button mat-raised-button color="primary" style="width : 200px" (click)="uploadMap()">
+                Upload
+            </button>
+        </div>
+        <mat-selection-list [multiple]="false" >
+            <mat-list-option *ngFor="let map of actualMaps" (click) = "selectMap(map)">
+                <div>{{map}}  <mat-icon  *ngIf="this.isMissionMapIconVisible(map)" aria-hidden="false" aria-label="Example home icon" fontIcon="star"></mat-icon></div>
+            </mat-list-option>
+        </mat-selection-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div>
+            <button mat-raised-button color="primary" style="float: left;" (click)="setMissionMap()" [disabled]="!selectedMap || (selectedMap === missionMap)">
+                Set Mission Map
+            </button>
+            <button mat-raised-button color="primary" style="float: right;" (click)="deleteMap()" [disabled]="!selectedMap || (selectedMap === missionMap)">
+                Delete
+            </button>
+        </div>
+        <div>
+            <img [src]=imageSource>
+        </div>
+
+    </mat-drawer-content>
+</mat-drawer-container>

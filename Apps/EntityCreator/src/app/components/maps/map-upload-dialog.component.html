@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Upload a new map</h1>
+<div mat-dialog-content> 
+    <mat-form-field appearance="fill">
+        <mat-label>Map Name</mat-label>
+        <input matInput [(ngModel)]="mapName">
+  </mat-form-field></div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="openInput()">Browse</button>
+  <input id="fileInput" class="hide-it" type="file" (change)="fileChange($event)" >
+  <button mat-raised-button [disabled]="!mapToUpload" (click)="upload()">Upload</button>
+</div>
