@@ -15,9 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MapsRepositoryService.Infrastructure\MapsRepositoryService.Infrastructure.csproj" />
     <ProjectReference Include="..\Connectivity\Connectivity.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\MapsRepositoryService.Core\MapsRepositoryService.Core.csproj" />
+    <ProjectReference Include="..\MapsRepositoryService.Infrastructure\MapsRepositoryService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -17,25 +17,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notifications", "Notificati
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{BE1AA7C3-924E-4FB1-B277-A17A6FC58E7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationsService.Core", "NotificationsService.Core\NotificationsService.Core.csproj", "{D09BDB64-3848-41BF-81DD-C3C056684532}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationsService.Infrastructure", "NotificationsService.Infrastructure\NotificationsService.Infrastructure.csproj", "{42A89949-9F99-448C-BECB-97F1D6E9CBC0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationsService", "NotificationsService\NotificationsService.csproj", "{61813733-7AA3-4774-A623-8B228A42C26E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Connectivity", "Connectivity\Connectivity.csproj", "{6CAF3F90-2036-496D-BCA5-6DB71AFBEA24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{E2CDC598-CF7B-45C1-8D76-D3E2B1F07B24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGw", "OcelotApiGw\OcelotApiGw.csproj", "{E8188AF0-14A3-4C01-8C93-7CD63939A9E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotApiGw", "OcelotApiGw\OcelotApiGw.csproj", "{E8188AF0-14A3-4C01-8C93-7CD63939A9E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MapsRepository", "MapsRepository", "{6E206205-9AF0-4B80-8314-9A88EEC68439}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapsRepositoryService", "MapsRepositoryService\MapsRepositoryService.csproj", "{4BA8EF67-9D0B-481C-985E-18A3F46A9726}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapsRepositoryService", "MapsRepositoryService\MapsRepositoryService.csproj", "{4BA8EF67-9D0B-481C-985E-18A3F46A9726}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapsRepositoryService.Core", "MapsRepositoryService.Core\MapsRepositoryService.Core.csproj", "{5D5AF87B-145C-42FA-A92C-BBACB4BB8199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapsRepositoryService.Core", "MapsRepositoryService.Core\MapsRepositoryService.Core.csproj", "{5D5AF87B-145C-42FA-A92C-BBACB4BB8199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapsRepositoryService.Infrastructure", "..\MapsRepositoryService.Infrastructure\MapsRepositoryService.Infrastructure.csproj", "{FE5DE81D-2406-49C9-895D-AC94091474EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapsRepositoryService.Infrastructure", "MapsRepositoryService.Infrastructure\MapsRepositoryService.Infrastructure.csproj", "{405B34C2-8B76-4B14-8077-CFF5F4A52EC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,14 +55,6 @@ Global
 		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D09BDB64-3848-41BF-81DD-C3C056684532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D09BDB64-3848-41BF-81DD-C3C056684532}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D09BDB64-3848-41BF-81DD-C3C056684532}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D09BDB64-3848-41BF-81DD-C3C056684532}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42A89949-9F99-448C-BECB-97F1D6E9CBC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42A89949-9F99-448C-BECB-97F1D6E9CBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42A89949-9F99-448C-BECB-97F1D6E9CBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42A89949-9F99-448C-BECB-97F1D6E9CBC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61813733-7AA3-4774-A623-8B228A42C26E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61813733-7AA3-4774-A623-8B228A42C26E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61813733-7AA3-4774-A623-8B228A42C26E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,10 +79,10 @@ Global
 		{5D5AF87B-145C-42FA-A92C-BBACB4BB8199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D5AF87B-145C-42FA-A92C-BBACB4BB8199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D5AF87B-145C-42FA-A92C-BBACB4BB8199}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE5DE81D-2406-49C9-895D-AC94091474EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE5DE81D-2406-49C9-895D-AC94091474EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE5DE81D-2406-49C9-895D-AC94091474EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE5DE81D-2406-49C9-895D-AC94091474EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{405B34C2-8B76-4B14-8077-CFF5F4A52EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{405B34C2-8B76-4B14-8077-CFF5F4A52EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{405B34C2-8B76-4B14-8077-CFF5F4A52EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{405B34C2-8B76-4B14-8077-CFF5F4A52EC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,14 +91,12 @@ Global
 		{EF566365-FB86-43A1-95C3-F63CAB7819A2} = {E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}
 		{B5978C73-808B-4E18-B776-87B7BD754453} = {E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}
 		{48BE46A0-5314-47B0-BDBB-1ED9B5C42A1B} = {E94F2EB7-106B-423A-8657-5FBA7A7C5DA5}
-		{D09BDB64-3848-41BF-81DD-C3C056684532} = {718AA694-58CD-4A03-9E3B-B2457B23C686}
-		{42A89949-9F99-448C-BECB-97F1D6E9CBC0} = {718AA694-58CD-4A03-9E3B-B2457B23C686}
 		{61813733-7AA3-4774-A623-8B228A42C26E} = {718AA694-58CD-4A03-9E3B-B2457B23C686}
 		{6CAF3F90-2036-496D-BCA5-6DB71AFBEA24} = {BE1AA7C3-924E-4FB1-B277-A17A6FC58E7F}
 		{E2CDC598-CF7B-45C1-8D76-D3E2B1F07B24} = {BE1AA7C3-924E-4FB1-B277-A17A6FC58E7F}
 		{4BA8EF67-9D0B-481C-985E-18A3F46A9726} = {6E206205-9AF0-4B80-8314-9A88EEC68439}
 		{5D5AF87B-145C-42FA-A92C-BBACB4BB8199} = {6E206205-9AF0-4B80-8314-9A88EEC68439}
-		{FE5DE81D-2406-49C9-895D-AC94091474EF} = {6E206205-9AF0-4B80-8314-9A88EEC68439}
+		{405B34C2-8B76-4B14-8077-CFF5F4A52EC4} = {6E206205-9AF0-4B80-8314-9A88EEC68439}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D7AE6EC-6C1C-4D70-8B42-0C458C10CE39}
