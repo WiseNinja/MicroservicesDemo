@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+		<ProjectReference Include="..\Infrastructure\Connectivity.Infrastructure.csproj" />
 		<ProjectReference Include="..\MapeEntitiesService.Core\MapEntitiesService.Core.csproj" />
 		<ProjectReference Include="..\MapEntitiesService.Infrastructure\MapEntitiesService.Infrastructure.csproj" />
 	</ItemGroup>

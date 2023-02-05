@@ -4,5 +4,5 @@ namespace MapsRepositoryService.Core.DB.Commands;
 
 public interface IInsertMapCommand
 {
-    Task InsertMapAsync(MapDto mapDto);
+    Task<bool> InsertMapAsync(MapDto mapDto);
 }

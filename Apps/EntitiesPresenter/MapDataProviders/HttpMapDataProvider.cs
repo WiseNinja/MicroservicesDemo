@@ -10,12 +10,12 @@ public class HttpMapDataProvider : IMapDataProvider
     public async Task<string> GetMissionMapNameAsync()
     {
         using HttpClient httpClient = new HttpClient();
-        return await httpClient.GetStringAsync(new Uri($"http://localhost:5003/api/MapsRepository/GetMissionMapName"));
+        return await httpClient.GetStringAsync(new Uri($"http://localhost:5003/api/MissionMaps/GetMissionMapName"));
     }
 
     public async Task<string> GetMissionMapDataAsync(string? mapName)
     {
         using HttpClient httpClient = new HttpClient();
-        return await httpClient.GetStringAsync(new Uri($"http://localhost:5003/api/MapsRepository/GetMapDataByMapName?mapName={mapName}"));
+        return await httpClient.GetStringAsync(new Uri($"http://localhost:5003/api/MissionMaps/GetMapDataByMapName?mapName={mapName}"));
     }
 }

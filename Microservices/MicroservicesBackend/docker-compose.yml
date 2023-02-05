@@ -8,6 +8,9 @@ services:
       dockerfile: MapEntitiesService/Dockerfile
     networks:
         - microserviceDemoNetwork
+    depends_on:
+        - rabbitmq
+        - seq
 
   notificationsservice:
     image: ${DOCKER_REGISTRY-}notificationsservice
@@ -16,6 +19,9 @@ services:
       dockerfile: NotificationsService/Dockerfile
     networks:
         - microserviceDemoNetwork
+    depends_on:
+        - rabbitmq
+        - seq
 
   mapsrepositoryservice:
     image: ${DOCKER_REGISTRY-}mapsrepositoryservice
@@ -24,6 +30,10 @@ services:
       dockerfile: MapsRepositoryService/Dockerfile
     networks:
         - microserviceDemoNetwork
+    depends_on:
+        - rabbitmq
+        - minio
+        - seq
 
   ocelotapigw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
@@ -34,6 +44,8 @@ services:
       - "5003:80"
     networks:
         - microserviceDemoNetwork
+    depends_on:
+        - seq
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -79,4 +91,3 @@ volumes:
 networks:
   microserviceDemoNetwork:
     driver: bridge
-

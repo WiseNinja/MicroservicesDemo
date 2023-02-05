@@ -2,5 +2,5 @@
 
 public interface IDeleteMapCommand
 {
-    Task DeleteMapAsync(string mapName);
+    Task<bool> DeleteMapAsync(string mapName);
 }

@@ -20,8 +20,13 @@ public class MapPointsController : ControllerBase
     [HttpPost(Name = "SetNewMapPoint")]
     public async Task<ActionResult> SetNewMapPoint([FromBody] MapPointDto mapPointDto)
     {
-        await _mapPointsService.AddNewMapPointAsync(mapPointDto);
-        _logger.LogInformation( $"Added a new map point - Name:{mapPointDto.Name}, X: {mapPointDto.X}, Y: {mapPointDto.Y}");
-        return Ok();
+        bool setNewMapPointWasSuccessful = await _mapPointsService.AddNewMapPointAsync(mapPointDto);
+
+        if (setNewMapPointWasSuccessful)
+        {
+            _logger.LogInformation($"Added a new map point - Name:{mapPointDto.Name}, X: {mapPointDto.X}, Y: {mapPointDto.Y}");
+            return Ok();
+        }
+        return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred while trying to set a new Map Point");
     }
 }

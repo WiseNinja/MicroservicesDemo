@@ -1,18 +1,36 @@
 ﻿using MapsRepositoryService.Core.DB.Commands;
-using MapsRepositoryService.Infrastructure.MinIO.Helpers;
+using Microsoft.Extensions.Logging;
+using Minio;
 
 namespace MapsRepositoryService.Infrastructure.MinIO.Commands;
 
-public class DeleteMapCommand : IDeleteMapCommand
+internal class DeleteMapCommand : IDeleteMapCommand
 {
-    private readonly FileOperationsHelper _fileOperationsHelper;
+    private readonly MinioClient _minioClient;
+    private readonly ILogger<DeleteMapCommand> _logger;
 
-    public DeleteMapCommand(FileOperationsHelper fileOperationsHelper)
+    public DeleteMapCommand(MinioClient minioClient, ILogger<DeleteMapCommand> logger)
     {
-        _fileOperationsHelper = fileOperationsHelper;
+        _minioClient = minioClient;
+        _logger = logger;
     }
-    public async Task DeleteMapAsync(string mapName)
+
+    public async Task<bool> DeleteMapAsync(string mapName)
     {
-        await _fileOperationsHelper.DeleteFileAsync(mapName, "maps-bucket");
+        try
+        {
+            var removeObjectArgs = new RemoveObjectArgs()
+                .WithBucket("maps-bucket")
+                .WithObject(mapName);
+
+            await _minioClient.RemoveObjectAsync(removeObjectArgs);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred when trying to delete Map {mapName} from storage, details {ex}");
+            return false;
+        }
+
+        return true;
     }
 }

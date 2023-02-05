@@ -4,5 +4,5 @@ namespace MapEntitiesService.Core.Interfaces;
 
 public interface IMapPointsService
 {
-    Task AddNewMapPointAsync(MapPointDto mapPoint);
+    Task<bool> AddNewMapPointAsync(MapPointDto mapPoint);
 }

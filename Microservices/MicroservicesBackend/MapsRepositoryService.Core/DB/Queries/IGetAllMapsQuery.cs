@@ -2,5 +2,5 @@
 
 public interface IGetAllMapsQuery
 {
-    Task<List<string>> GetAllMapNamesAsync();
+    Task<List<string>?> GetAllMapNamesAsync();
 }

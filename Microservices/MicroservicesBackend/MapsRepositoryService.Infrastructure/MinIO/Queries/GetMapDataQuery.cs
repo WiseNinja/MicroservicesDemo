@@ -1,19 +1,44 @@
 ﻿using MapsRepositoryService.Core.DB.Queries;
-using MapsRepositoryService.Infrastructure.MinIO.Helpers;
+using Microsoft.Extensions.Logging;
+using Minio;
 
 namespace MapsRepositoryService.Infrastructure.MinIO.Queries;
 
-public class GetMapDataQuery : IGetMapDataQuery
+internal class GetMapDataQuery : IGetMapDataQuery
 {
-    private readonly FileOperationsHelper _fileOperationsHelper;
+    private readonly MinioClient _minioClient;
+    private readonly ILogger<GetMapDataQuery> _logger;
 
-    public GetMapDataQuery(FileOperationsHelper fileOperationsHelper)
+    public GetMapDataQuery(MinioClient minioClient, ILogger<GetMapDataQuery> logger)
     {
-        _fileOperationsHelper = fileOperationsHelper;
+        _minioClient = minioClient;
+        _logger = logger;
     }
 
     public async Task<string> GetMapDataByNameAsync(string mapName)
     {
-        return await _fileOperationsHelper.GetFileDataAsBase64(mapName,"maps-bucket");
+        var fileData = string.Empty;
+        try
+        {
+            var args = new GetObjectArgs()
+                .WithBucket("maps-bucket")
+                .WithObject(mapName).WithCallbackStream(stream => fileData = ConvertToBase64(stream));
+            await _minioClient.GetObjectAsync(args);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error occured when fetching objects from maps-bucket, details {ex}");
+        }
+        return fileData;
+    }
+
+    private string ConvertToBase64(Stream stream)
+    {
+        using var memoryStream = new MemoryStream();
+        stream.CopyTo(memoryStream);
+        var bytes = memoryStream.ToArray();
+
+        var base64 = Convert.ToBase64String(bytes);
+        return base64;
     }
 }

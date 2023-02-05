@@ -1,12 +1,12 @@
-﻿using Connectivity;
+﻿using Connectivity.Core;
 using Infrastructure.RabbitMQ;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
 
-public static class InfrastructureServicesRegistration
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+    public static IServiceCollection AddConnectivity(this IServiceCollection services)
     {
         services.AddSingleton<IPublisher, RabbitMqPublisher>();
         services.AddSingleton<ISubscriber, RabbitMqSubscriber>();

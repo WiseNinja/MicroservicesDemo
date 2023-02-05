@@ -2,5 +2,5 @@
 
 public interface ISetMissionMapCommand
 {
-    Task SetMainMissionMapAsync(string? mapName);
+    Task<bool> SetMainMissionMapAsync(string? mapName);
 }

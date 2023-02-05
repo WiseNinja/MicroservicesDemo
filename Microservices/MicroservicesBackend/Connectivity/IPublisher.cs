@@ -1,6 +1,6 @@
-﻿namespace Connectivity;
+﻿namespace Connectivity.Core;
 
 public interface IPublisher
 { 
-    Task PublishAsync(string message);
+    Task<bool> PublishAsync(string message);
 }

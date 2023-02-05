@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Connectivity\Connectivity.csproj" />
+    <ProjectReference Include="..\Connectivity\Connectivity.Core.csproj" />
   </ItemGroup>
 
 </Project>

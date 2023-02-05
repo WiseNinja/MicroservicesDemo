@@ -1,19 +1,32 @@
-﻿using Connectivity;
+﻿using Connectivity.Core;
 using EasyNetQ;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.RabbitMQ;
 
-public class RabbitMqSubscriber : ISubscriber
+internal class RabbitMqSubscriber : ISubscriber
 {
+    private readonly ILogger<RabbitMqSubscriber> _logger;
     private readonly IBus _bus;
-    public RabbitMqSubscriber()
+    public RabbitMqSubscriber(ILogger<RabbitMqSubscriber> logger)
     {
+        _logger = logger;
         _bus = RabbitHutch.CreateBus("host=rabbitmq");
     }
-    public async Task SubscribeAsync(Action<string> handleMessage)
+    public async Task<bool> SubscribeAsync(Action<string> handleMessage)
     {
-        await _bus.PubSub.SubscribeAsync<string>(
-            "my_subscription_id", message => handleMessage(message));
+        try
+        {
+            await _bus.PubSub.SubscribeAsync<string>(
+                "my_subscription_id", handleMessage);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occurred when trying to Subscribe to RabbitMQ publisher, details {ex}");
+            return false;
+        }
+
+        return true;
     }
 
 }

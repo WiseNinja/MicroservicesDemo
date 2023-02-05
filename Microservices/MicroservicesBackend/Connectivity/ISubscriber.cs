@@ -1,6 +1,6 @@
-﻿namespace Connectivity;
+﻿namespace Connectivity.Core;
 
 public interface ISubscriber
 {
-    Task SubscribeAsync(Action<string> handleMessage);
+    Task<bool> SubscribeAsync(Action<string> handleMessage);
 }

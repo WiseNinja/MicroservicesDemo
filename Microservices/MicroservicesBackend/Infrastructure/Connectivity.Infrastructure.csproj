@@ -9,11 +9,12 @@
   <ItemGroup>
     <PackageReference Include="EasyNetQ" Version="7.3.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Connectivity\Connectivity.csproj" />
+    <ProjectReference Include="..\Connectivity\Connectivity.Core.csproj" />
   </ItemGroup>
 
 

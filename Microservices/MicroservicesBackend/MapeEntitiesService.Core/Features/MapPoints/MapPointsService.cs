@@ -1,4 +1,4 @@
-﻿using Connectivity;
+﻿using Connectivity.Core;
 using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -16,10 +16,24 @@ public class MapPointsService : IMapPointsService
         _publisher = publisher;
         _logger = logger;
     }
-    public async Task AddNewMapPointAsync(MapPointDto mapPoint)
+    public async Task<bool> AddNewMapPointAsync(MapPointDto mapPoint)
     {
-        string newMapPointToBeAdded = JsonConvert.SerializeObject(mapPoint);
-        await _publisher.PublishAsync(newMapPointToBeAdded);
-        _logger.Log(LogLevel.Information, "New Map Point creation started");
+        var newMapPointToBeAdded = string.Empty; 
+        try
+        {
+             newMapPointToBeAdded = JsonConvert.SerializeObject(mapPoint);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"An error occured when trying to serialize the Map point entity to be added, details: {ex}");
+        }
+        
+        var pointAddedPublishWasSuccessful = await _publisher.PublishAsync(newMapPointToBeAdded);
+        if (pointAddedPublishWasSuccessful && !string.IsNullOrEmpty(newMapPointToBeAdded))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

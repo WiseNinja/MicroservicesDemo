@@ -5,7 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { MapUploadDialog } from './map-upload-dialog.component';
 import { Subscription } from 'rxjs';
-import { MissionMapDto } from './dtos/mission-map-dto';
+import { MissionMapDto } from './mission-map-dto';
 
 @Component({
   selector: 'app-maps',

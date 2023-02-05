@@ -1,4 +1,4 @@
-﻿using Connectivity;
+﻿using Connectivity.Core;
 using Microsoft.AspNetCore.SignalR;
 using NotificationsService.Hubs;
 
@@ -19,14 +19,14 @@ public class MessagesHandler
 
     public async Task SubscribeAsync()
     {
-        try
+        bool subscribeToMessageBrokerWasSuccessful = await _subscriber.SubscribeAsync(HandleMessage);
+        if (subscribeToMessageBrokerWasSuccessful)
         {
-            await _subscriber.SubscribeAsync(HandleMessage);
             _logger.LogInformation("Subscribed to message broker");
         }
-        catch (Exception ex)
+        else
         {
-            _logger.LogError($"An error occurred during subscription to the message broker, details: {ex}");
+            _logger.LogInformation("Failed to subscribe to message broker");
         }
     }
 

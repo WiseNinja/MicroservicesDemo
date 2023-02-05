@@ -2,13 +2,13 @@ using Infrastructure;
 using MapsRepositoryService.Infrastructure;
 using Serilog;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddRepositoryInfrastructureServices();
-builder.Services.AddInfrastructureServices();
+builder.Services.AddPersistence();
+builder.Services.AddConnectivity();
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
@@ -16,7 +16,7 @@ builder.Services.AddCors(policyBuilder =>
 builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
 
 // Configure the HTTP request pipeline.
-WebApplication app = builder.Build();
+var app = builder.Build();
 app.UseCors();
 
 app.UseSerilogRequestLogging();
