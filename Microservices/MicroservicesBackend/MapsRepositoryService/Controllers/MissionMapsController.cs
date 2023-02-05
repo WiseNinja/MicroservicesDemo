@@ -15,16 +15,19 @@ namespace MapsRepositoryService.Controllers
         private readonly IPublisher _publisher;
         private readonly ILogger<MissionMapsController> _logger;
         private readonly IGetMissionMapNameQuery _getMissionMapNameQuery;
+        private readonly IGetMapDataQuery _getMapDataQuery;
         private readonly ISetMissionMapCommand _setMissionMapCommand;
 
         public MissionMapsController(IPublisher publisher,
             ILogger<MissionMapsController> logger, 
             IGetMissionMapNameQuery getMissionMapNameQuery,
+            IGetMapDataQuery getMapDataQuery,
             ISetMissionMapCommand setMissionMapCommand)
         {
             _publisher = publisher;
             _logger = logger;
             _getMissionMapNameQuery = getMissionMapNameQuery;
+            _getMapDataQuery = getMapDataQuery;
             _setMissionMapCommand = setMissionMapCommand;
         }
 
@@ -57,6 +60,18 @@ namespace MapsRepositoryService.Controllers
         public async Task<ActionResult> GetMissionMapName()
         {
             var missionMapName = await _getMissionMapNameQuery.GetMissionMapNameAsync();
+            if (!string.IsNullOrEmpty(missionMapName))
+            {
+                return Ok(missionMapName);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred occurred while trying to fetch mission map name");
+        }
+
+        [HttpGet(Name = "GetMissionMapData")]
+        public async Task<ActionResult> GetMissionMapData(string mapName)
+        {
+            var missionMapName = await _getMapDataQuery.GetMapDataByNameAsync(mapName);
             if (!string.IsNullOrEmpty(missionMapName))
             {
                 return Ok(missionMapName);

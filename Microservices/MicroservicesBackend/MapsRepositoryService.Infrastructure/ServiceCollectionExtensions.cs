@@ -25,6 +25,7 @@ public static class ServiceCollectionExtensions
             options.SecretKey = "minio123";
             options.ConfigureClient(async client =>
             {
+                client.Build();
                 var mapsBucketFound = await client.BucketExistsAsync(new BucketExistsArgs().WithBucket("maps-bucket"));
                 var missionMapBucketFound = await client.BucketExistsAsync(new BucketExistsArgs().WithBucket("missionmap-bucket"));
                 if (!mapsBucketFound)
@@ -35,7 +36,6 @@ public static class ServiceCollectionExtensions
                 {
                     await client.MakeBucketAsync(new MakeBucketArgs().WithBucket("missionmap-bucket"));
                 }
-                client.Build();
             });
         });
         return services;

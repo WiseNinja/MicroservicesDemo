@@ -38,14 +38,14 @@ export class MapsService {
   }
 
   setMissionMap(missionMapDto: MissionMapDto){
-    return this.http.post<any>(this.baseUrl + '/api/MapsRepository/SetMissionMap', missionMapDto);
+    return this.http.post<any>(this.baseUrl + '/api/MissionMaps/SetMissionMap', missionMapDto);
   }
 
   getMissionMap(): Observable<string> {
     const requestOptions: Object = {
       responseType: 'text'
     }
-    return this.http.get<string>(this.baseUrl + '/api/MapsRepository/GetMissionMapName', requestOptions);
+    return this.http.get<string>(this.baseUrl + '/api/MissionMaps/GetMissionMapName', requestOptions);
   }
 
 }

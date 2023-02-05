@@ -48,6 +48,7 @@ export class MapUploadDialog {
           this.uploadedMap = map;
           this.mapUploadDialogRef.close(this.uploadedMap);
         }
+        
       });
     }
     reader.readAsDataURL(this.mapToUpload);
