@@ -6,7 +6,7 @@
             </button>
         </div>
         <mat-selection-list [multiple]="false" >
-            <mat-list-option *ngFor="let map of actualMaps" (click) = "selectMap(map)">
+            <mat-list-option *ngFor="let map of allMaps" (click) = "selectMap(map)">
                 <div>{{map}}  <mat-icon  *ngIf="this.isMissionMapIconVisible(map)" aria-hidden="false" aria-label="Example home icon" fontIcon="star"></mat-icon></div>
             </mat-list-option>
         </mat-selection-list>
@@ -21,7 +21,7 @@
             </button>
         </div>
         <div>
-            <img [src]=imageSource>
+            <img [src]=mapImageSource>
         </div>
 
     </mat-drawer-content>

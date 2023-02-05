@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MapToUploadDto } from '../components/maps/map-to-upload-dto';
-import { MissionMapDto } from '../components/maps/mission-map-dto';
+import { MapToUploadDto } from '../components/maps/dtos/map-to-upload-dto';
+import { MissionMapDto } from '../components/maps/dtos/mission-map-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,6 @@ export class MapsService {
   }
 
   uploadMap(mapToUploadDto: MapToUploadDto): Observable<any> {
-
     this.mockMaps.push(mapToUploadDto.name);
     return this.http.post<MapToUploadDto>(this.baseUrl + '/api/MapsRepository/UploadMap', mapToUploadDto);
   }

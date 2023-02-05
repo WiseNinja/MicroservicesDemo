@@ -17,10 +17,10 @@ public partial class App : Application
     {
         AppHost = Host
             .CreateDefaultBuilder()
-            .ConfigureServices((hostContext, services) =>
+            .ConfigureServices((_, services) =>
             {
                 services.AddSingleton<MainWindow>();
-                services.AddTransient<IEntitiesPresenterViewModel, EntitiesPresenterViewModel>();
+                services.AddScoped<EntitiesPresenterViewModel>();
                 services.AddScoped<IMapDataProvider, HttpMapDataProvider>();
             })
             .Build();

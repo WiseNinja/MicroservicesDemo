@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MapEntityDto } from '../components/map-entities/map-entity-dto';
+import { MapEntityDto } from '../components/map-entities/dtos/map-entity-dto';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'

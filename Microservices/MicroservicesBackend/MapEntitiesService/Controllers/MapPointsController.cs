@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MapEntitiesService.Core.DTOs;
+﻿using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,15 +9,14 @@ namespace MapEntitiesService.Controllers;
 public class MapPointsController : ControllerBase
 {
     private readonly IMapPointsService _mapPointsService;
-    private readonly IMapper _mapper;
     private readonly ILogger<MapPointsController> _logger;
 
-    public MapPointsController(IMapPointsService mapPointsService, IMapper mapper, ILogger<MapPointsController> logger)
+    public MapPointsController(IMapPointsService mapPointsService, ILogger<MapPointsController> logger)
     {
         _mapPointsService = mapPointsService;
-        _mapper = mapper;
         _logger = logger;
     }
+
     [HttpPost(Name = "SetNewMapPoint")]
     public async Task<ActionResult> SetNewMapPoint([FromBody] MapPointDto mapPointDto)
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -16,11 +15,11 @@ using Newtonsoft.Json;
 
 namespace EntitiesPresenter.ViewModels;
 
-public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPropertyChanged
+public class EntitiesPresenterViewModel : INotifyPropertyChanged
 {
     private readonly IMapDataProvider _mapDataProvider;
     public ObservableCollection<EntityModel> EntitiesToShowInCanvas { get; set; }
-    public Image MissionMap { get; set; }
+    public Image? MissionMap { get; set; }
 
     public EntitiesPresenterViewModel(IMapDataProvider mapDataProvider)
     {
@@ -63,14 +62,7 @@ public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPr
                         JsonConvert.DeserializeObject<EntityDetailsDto>(message);
                     if (receivedEntityDto != null)
                     {
-                        EntityModel entityModel = new EntityModel
-                        {
-                            Name = receivedEntityDto.Name,
-                            X = receivedEntityDto.X,
-                            Y = receivedEntityDto.Y
-                        };
-                        Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
-                        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
+                        AddNewEntityToMap(receivedEntityDto);
                     }
                     else
                     {
@@ -89,13 +81,7 @@ public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPr
                     MissionMapDto? receivedMissionMapDto = JsonConvert.DeserializeObject<MissionMapDto>(message);
                     if (receivedMissionMapDto != null)
                     {
-                        await Application.Current.Dispatcher.Invoke(async () =>
-                        {
-                            MissionMap = await GetMissionMapImageAsync(receivedMissionMapDto.MissionMapName);
-                            EntitiesToShowInCanvas.Clear();
-                        });
-                        OnPropertyChanged(nameof(MissionMap));
-                        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
+                        await SetMainMissionMapAsync(receivedMissionMapDto);
                     }
                     else
                     {
@@ -115,7 +101,38 @@ public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPr
         }
     }
 
-    private async Task<Image> GetMissionMapImageAsync(string missionMapName)
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    #region Private Methods
+    private void AddNewEntityToMap(EntityDetailsDto receivedEntityDto)
+    {
+        EntityModel entityModel = new EntityModel
+        {
+            Name = receivedEntityDto.Name,
+            X = receivedEntityDto.X,
+            Y = receivedEntityDto.Y
+        };
+        Application.Current.Dispatcher.Invoke(() => EntitiesToShowInCanvas.Add(entityModel));
+        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
+    }
+
+    private async Task SetMainMissionMapAsync(MissionMapDto receivedMissionMapDto)
+    {
+        await Application.Current.Dispatcher.Invoke(async () =>
+        {
+            MissionMap = await GetMissionMapImageAsync(receivedMissionMapDto.MissionMapName);
+            EntitiesToShowInCanvas.Clear();
+        });
+        OnPropertyChanged(nameof(MissionMap));
+        OnPropertyChanged(nameof(EntitiesToShowInCanvas));
+    }
+
+    private async Task<Image> GetMissionMapImageAsync(string? missionMapName)
     {
         Image missionMapImage = new Image();
         string missionMapData = await _mapDataProvider.GetMissionMapDataAsync(missionMapName);
@@ -126,20 +143,8 @@ public class EntitiesPresenterViewModel : IEntitiesPresenterViewModel, INotifyPr
         missionMapBitmap.EndInit();
         missionMapImage.Source = missionMapBitmap;
         return missionMapImage;
-    }
+    } 
+    #endregion
 
-    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
 }

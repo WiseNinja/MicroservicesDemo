@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapsRepositoryService.Core.DB.Queries;
+﻿using MapsRepositoryService.Core.DB.Queries;
 using MapsRepositoryService.Infrastructure.MinIO.Helpers;
 
 namespace MapsRepositoryService.Infrastructure.MinIO.Queries

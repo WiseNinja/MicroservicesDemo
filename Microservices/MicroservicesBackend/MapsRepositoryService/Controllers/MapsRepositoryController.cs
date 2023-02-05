@@ -1,5 +1,4 @@
-﻿using Common.Connectivity.Enums;
-using Connectivity;
+﻿using Connectivity;
 using MapsRepositoryService.Core.DB.Commands;
 using MapsRepositoryService.Core.DB.Queries;
 using MapsRepositoryService.Core.DTOs;
@@ -51,8 +50,8 @@ public class MapsRepositoryController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while trying to upload a new map to the server, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, "A general exception occurred while trying to upload a new map to server");
+            _logger.LogError($"Exception occurred while trying to upload a new map to the server, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Exception occurred while trying to upload a new map to server");
         }
     }
 
@@ -67,8 +66,8 @@ public class MapsRepositoryController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while trying to delete a map from the server, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, "A general exception occurred while trying to delete a map from the server");
+            _logger.LogError($"Exception occurred while trying to delete a map from the server, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Exception occurred while trying to delete a map from the server");
         }
     }
 
@@ -77,20 +76,16 @@ public class MapsRepositoryController : ControllerBase
     {
         try
         {
-            await _setMissionMapCommand.SetMainMissionMapAsync(missionMap.Name);
-            Message message = new Message
-            {
-                MessageId = Guid.NewGuid(),
-                MessageType = MessageType.MissionMapSet,
-                Payload = JsonConvert.SerializeObject(missionMap)
-            };
-            await _publisher.PublishAsync(message);
+            await _setMissionMapCommand.SetMainMissionMapAsync(missionMap.MissionMapName);
+            
+            string missionMapWasSet = JsonConvert.SerializeObject(missionMap);
+            await _publisher.PublishAsync(missionMapWasSet);
             return Ok();
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while to set map {missionMap.Name} as main mission map, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while to set map {missionMap.Name} as main mission map");
+            _logger.LogError($"Exception occurred while to set map {missionMap.MissionMapName} as main mission map, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred while trying to set map {missionMap.MissionMapName} as main mission map");
         }
     }
 
@@ -104,8 +99,8 @@ public class MapsRepositoryController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while trying to get all map names, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, "A general exception occurred while trying to get all map names");
+            _logger.LogError($"Exception occurred while trying to get all map names, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Exception occurred while trying to get all map names");
         }
     }
 
@@ -119,8 +114,8 @@ public class MapsRepositoryController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while trying to map data for map : {mapName}, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to map data for map : {mapName}");
+            _logger.LogError($"Exception occurred while trying to map data for map : {mapName}, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred while trying to map data for map : {mapName}");
         }
     }
 
@@ -134,8 +129,8 @@ public class MapsRepositoryController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError($"A general exception occurred while trying to fetch mission map name, details: {ex}");
-            return StatusCode(StatusCodes.Status500InternalServerError, $"A general exception occurred while trying to fetch mission map name");
+            _logger.LogError($"Exception occurred occurred while trying to fetch mission map name, details: {ex}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred occurred while trying to fetch mission map name");
         }
     }
 }

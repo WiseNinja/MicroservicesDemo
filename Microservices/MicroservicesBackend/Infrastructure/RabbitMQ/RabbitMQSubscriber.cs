@@ -12,8 +12,8 @@ public class RabbitMqSubscriber : ISubscriber
     }
     public async Task SubscribeAsync(Action<string> handleMessage)
     {
-        await _bus.PubSub.SubscribeAsync<Message>(
-            "my_subscription_id", msg => handleMessage(msg.Payload));
+        await _bus.PubSub.SubscribeAsync<string>(
+            "my_subscription_id", message => handleMessage(message));
     }
 
 }

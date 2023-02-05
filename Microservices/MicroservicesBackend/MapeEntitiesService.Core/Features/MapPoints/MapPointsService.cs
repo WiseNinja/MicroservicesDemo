@@ -1,5 +1,4 @@
-﻿using Common.Connectivity.Enums;
-using Connectivity;
+﻿using Connectivity;
 using MapEntitiesService.Core.DTOs;
 using MapEntitiesService.Core.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -17,15 +16,10 @@ public class MapPointsService : IMapPointsService
         _publisher = publisher;
         _logger = logger;
     }
-    public async Task AddNewMapPointAsync(MapPointDto mapPointDto)
+    public async Task AddNewMapPointAsync(MapPointDto mapPoint)
     {
-        Message message = new Message
-        {
-            MessageId = Guid.NewGuid(),
-            MessageType = MessageType.AddMapPoint,
-            Payload = JsonConvert.SerializeObject(mapPointDto)
-        };
-        await _publisher.PublishAsync(message);
+        string newMapPointToBeAdded = JsonConvert.SerializeObject(mapPoint);
+        await _publisher.PublishAsync(newMapPointToBeAdded);
         _logger.Log(LogLevel.Information, "New Map Point creation started");
     }
 }

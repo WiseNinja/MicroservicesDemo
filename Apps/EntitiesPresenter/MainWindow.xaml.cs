@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using EntitiesPresenter.Interfaces;
+using EntitiesPresenter.ViewModels;
 
 namespace EntitiesPresenter;
 
@@ -8,7 +8,7 @@ namespace EntitiesPresenter;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow(IEntitiesPresenterViewModel entitiesPresenterViewModel)
+    public MainWindow(EntitiesPresenterViewModel entitiesPresenterViewModel)
     {
         DataContext = entitiesPresenterViewModel;
         InitializeComponent();

@@ -12,7 +12,7 @@ public class RabbitMqPublisher : IPublisher
         _bus = RabbitHutch.CreateBus("host=rabbitmq");
     }
 
-    public async Task PublishAsync(Message message)
+    public async Task PublishAsync(string message)
     {
         await _bus.PubSub.PublishAsync(message);
     }

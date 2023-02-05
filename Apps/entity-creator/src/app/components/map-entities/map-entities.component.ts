@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MapEntitiesService } from 'src/app/services/map-entities.service';
-import { MapEntityDto } from './map-entity-dto';
+import { MapEntityDto } from './dtos/map-entity-dto';
 @Component({
   selector: 'app-map-entities',
   templateUrl: './map-entities.component.html',
@@ -12,7 +12,7 @@ export class MapEntitiesComponent {
   name = new FormControl('', [Validators.required]);
   xCoordinate = new FormControl('', [Validators.required, Validators.pattern("[+-]?([0-9]*[.])?[0-9]+")]);
   yCoordinate = new FormControl('', [Validators.required, Validators.pattern("[+-]?([0-9]*[.])?[0-9]+")]);
-  sendEntitySub!: Subscription;
+  sendEntitySubscription!: Subscription;
 
   constructor(private mapEntitiesService: MapEntitiesService){
 
@@ -36,6 +36,6 @@ export class MapEntitiesComponent {
     mapEntityDto.name = this.name.value as string;
     mapEntityDto.x = Number(this.xCoordinate.value);
     mapEntityDto.y = Number(this.yCoordinate.value);
-    this.sendEntitySub = this.mapEntitiesService.addMapEntity(mapEntityDto).subscribe();
+    this.sendEntitySubscription = this.mapEntitiesService.addMapEntity(mapEntityDto).subscribe();
   }
 }

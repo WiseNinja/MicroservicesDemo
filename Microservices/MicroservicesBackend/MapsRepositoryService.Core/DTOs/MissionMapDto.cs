@@ -2,5 +2,5 @@
 
 public class MissionMapDto
 {
-    public string Name { get; set; }
+    public string? MissionMapName { get; set; }
 }

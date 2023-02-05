@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { MapsService } from 'src/app/services/maps.service';
-import { MapToUploadDto } from './map-to-upload-dto';
+import { MapToUploadDto } from './dtos/map-to-upload-dto';
 
 @Component({
   selector: 'map-upload-dialog',
@@ -13,17 +13,14 @@ export class MapUploadDialog {
 
   mapName!: string;
   mapToUpload!: File; // hold our file
-  sub!: Subscription;
+  uploadMapSubscription!: Subscription;
   uploadedMap!: MapToUploadDto;
 
-  constructor(private mapsService: MapsService, private dialogRef: MatDialogRef<MapUploadDialog>) {
+  constructor(private mapsService: MapsService, private mapUploadDialogRef: MatDialogRef<MapUploadDialog>) {
 
   }
-  /**
- * this is used to trigger the input
- */
-  openInput() {
-    // your can use ElementRef for this later
+
+  openFileBrowser() {
     document.getElementById("fileInput")?.click();
   }
 
@@ -35,11 +32,7 @@ export class MapUploadDialog {
     }
   }
 
-
-  /**
-  * this is used to perform the actual upload
-  */
-  upload() {
+  uploadMap() {
     console.log('sending this to server', this.mapToUpload, this.mapName);
     let mapToUploadDto = new MapToUploadDto();
     mapToUploadDto.name = this.mapName;
@@ -50,10 +43,10 @@ export class MapUploadDialog {
       if (readerResult) {
         mapToUploadDto.data = readerResult.toString();
       }
-      this.sub = this.mapsService.uploadMap(mapToUploadDto).subscribe({
+      this.uploadMapSubscription = this.mapsService.uploadMap(mapToUploadDto).subscribe({
         next: map => {
           this.uploadedMap = map;
-          this.dialogRef.close(this.uploadedMap);
+          this.mapUploadDialogRef.close(this.uploadedMap);
         }
       });
     }

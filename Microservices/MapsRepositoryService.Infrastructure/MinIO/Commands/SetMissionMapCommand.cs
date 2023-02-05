@@ -12,7 +12,7 @@ public class SetMissionMapCommand : ISetMissionMapCommand
         _fileOperationsHelper = fileOperationsHelper;
     }
 
-    public async Task SetMainMissionMapAsync(string mapName)
+    public async Task SetMainMissionMapAsync(string? mapName)
     {
         await _fileOperationsHelper.CopyFileToBucketAsync(mapName, "maps-bucket", "missionmap-bucket");
     }
