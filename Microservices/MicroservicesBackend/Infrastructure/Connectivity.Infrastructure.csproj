@@ -13,9 +13,5 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Connectivity\Connectivity.Core.csproj" />
-  </ItemGroup>
-
 
 </Project>

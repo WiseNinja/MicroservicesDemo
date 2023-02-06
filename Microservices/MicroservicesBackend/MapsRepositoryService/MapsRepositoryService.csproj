@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Connectivity\Connectivity.Core.csproj" />
-    <ProjectReference Include="..\Infrastructure\Connectivity.Infrastructure.csproj" />
     <ProjectReference Include="..\MapsRepositoryService.Core\MapsRepositoryService.Core.csproj" />
     <ProjectReference Include="..\MapsRepositoryService.Infrastructure\MapsRepositoryService.Infrastructure.csproj" />
   </ItemGroup>
