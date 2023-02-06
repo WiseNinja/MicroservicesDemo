@@ -6,78 +6,77 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace MapsRepositoryService.Controllers
+namespace MapsRepositoryService.Controllers;
+
+[Route("api/[controller]/[action]")]
+[ApiController]
+public class MissionMapsController : ControllerBase
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class MissionMapsController : ControllerBase
+    private readonly IPublisher _publisher;
+    private readonly ILogger<MissionMapsController> _logger;
+    private readonly IGetMissionMapNameQuery _getMissionMapNameQuery;
+    private readonly IGetMissionMapDataQuery _getMissionMapDataQuery;
+    private readonly ISetMissionMapCommand _setMissionMapCommand;
+
+    public MissionMapsController(IPublisher publisher,
+        ILogger<MissionMapsController> logger, 
+        IGetMissionMapNameQuery getMissionMapNameQuery,
+        IGetMissionMapDataQuery getMissionMapDataQuery,
+        ISetMissionMapCommand setMissionMapCommand)
     {
-        private readonly IPublisher _publisher;
-        private readonly ILogger<MissionMapsController> _logger;
-        private readonly IGetMissionMapNameQuery _getMissionMapNameQuery;
-        private readonly IGetMissionMapDataQuery _getMissionMapDataQuery;
-        private readonly ISetMissionMapCommand _setMissionMapCommand;
+        _publisher = publisher;
+        _logger = logger;
+        _getMissionMapNameQuery = getMissionMapNameQuery;
+        _getMissionMapDataQuery = getMissionMapDataQuery;
+        _setMissionMapCommand = setMissionMapCommand;
+    }
 
-        public MissionMapsController(IPublisher publisher,
-            ILogger<MissionMapsController> logger, 
-            IGetMissionMapNameQuery getMissionMapNameQuery,
-            IGetMissionMapDataQuery getMissionMapDataQuery,
-            ISetMissionMapCommand setMissionMapCommand)
+    [HttpPost(Name = "SetMissionMap")]
+    public async Task<ActionResult> SetMissionMap(MissionMapDto missionMap)
+    {
+        var missionMapWasSet = string.Empty;
+
+        var setMissionMapWasSuccessful = await _setMissionMapCommand.SetMainMissionMapAsync(missionMap.MissionMapName);
+        try
         {
-            _publisher = publisher;
-            _logger = logger;
-            _getMissionMapNameQuery = getMissionMapNameQuery;
-            _getMissionMapDataQuery = getMissionMapDataQuery;
-            _setMissionMapCommand = setMissionMapCommand;
+            missionMapWasSet = JsonConvert.SerializeObject(missionMap);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error occured when trying to serialize Mission Map data for publishing, details {ex}");
+        }
+        var misionMapWasSetPublishWasSuccessful = await _publisher.PublishAsync(missionMapWasSet);
+
+        if (!string.IsNullOrEmpty(missionMapWasSet) && setMissionMapWasSuccessful &&
+            misionMapWasSetPublishWasSuccessful)
+        {
+            return Ok();
         }
 
-        [HttpPost(Name = "SetMissionMap")]
-        public async Task<ActionResult> SetMissionMap(MissionMapDto missionMap)
+        return StatusCode(StatusCodes.Status500InternalServerError, $"Error occurred while trying to set map {missionMap.MissionMapName} as main mission map");
+    }
+
+    [HttpGet(Name = "GetMissionMapName")]
+    public async Task<ActionResult> GetMissionMapName()
+    {
+        var missionMapName = await _getMissionMapNameQuery.GetMissionMapNameAsync();
+        if (!string.IsNullOrEmpty(missionMapName))
         {
-            var missionMapWasSet = string.Empty;
-
-            var setMissionMapWasSuccessful = await _setMissionMapCommand.SetMainMissionMapAsync(missionMap.MissionMapName);
-            try
-            {
-                missionMapWasSet = JsonConvert.SerializeObject(missionMap);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error occured when trying to serialize Mission Map data for publishing, details {ex}");
-            }
-            var misionMapWasSetPublishWasSuccessful = await _publisher.PublishAsync(missionMapWasSet);
-
-            if (!string.IsNullOrEmpty(missionMapWasSet) && setMissionMapWasSuccessful &&
-                misionMapWasSetPublishWasSuccessful)
-            {
-                return Ok();
-            }
-
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Error occurred while trying to set map {missionMap.MissionMapName} as main mission map");
+            return Ok(missionMapName);
         }
 
-        [HttpGet(Name = "GetMissionMapName")]
-        public async Task<ActionResult> GetMissionMapName()
-        {
-            var missionMapName = await _getMissionMapNameQuery.GetMissionMapNameAsync();
-            if (!string.IsNullOrEmpty(missionMapName))
-            {
-                return Ok(missionMapName);
-            }
+        return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred occurred while trying to fetch mission map name");
+    }
 
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred occurred while trying to fetch mission map name");
+    [HttpGet(Name = "GetMissionMapData")]
+    public async Task<ActionResult> GetMissionMapData(string mapName)
+    {
+        var missionMapName = await _getMissionMapDataQuery.GetMissionMapDataByNameAsync(mapName);
+        if (!string.IsNullOrEmpty(missionMapName))
+        {
+            return Ok(missionMapName);
         }
 
-        [HttpGet(Name = "GetMissionMapData")]
-        public async Task<ActionResult> GetMissionMapData(string mapName)
-        {
-            var missionMapName = await _getMissionMapDataQuery.GetMissionMapDataByNameAsync(mapName);
-            if (!string.IsNullOrEmpty(missionMapName))
-            {
-                return Ok(missionMapName);
-            }
-
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred occurred while trying to fetch mission map name");
-        }
+        return StatusCode(StatusCodes.Status500InternalServerError, $"Exception occurred occurred while trying to fetch mission map name");
     }
 }

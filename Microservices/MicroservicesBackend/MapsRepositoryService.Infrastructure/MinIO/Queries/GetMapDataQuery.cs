@@ -22,7 +22,7 @@ internal class GetMapDataQuery : IGetMapDataQuery
         {
             var args = new GetObjectArgs()
                 .WithBucket("maps-bucket")
-                .WithObject(mapName).WithCallbackStream(stream => mapData = ConvertToBase64(stream));
+                .WithObject(mapName).WithCallbackStream(stream => mapData = stream.ConvertToBase64());
             await _minioClient.GetObjectAsync(args);
         }
         catch (Exception ex)
@@ -30,15 +30,5 @@ internal class GetMapDataQuery : IGetMapDataQuery
             _logger.LogError($"Error occurred when fetching objects from maps-bucket, details {ex}");
         }
         return mapData;
-    }
-
-    private string ConvertToBase64(Stream stream)
-    {
-        using var memoryStream = new MemoryStream();
-        stream.CopyTo(memoryStream);
-        var bytes = memoryStream.ToArray();
-
-        var base64 = Convert.ToBase64String(bytes);
-        return base64;
     }
 }
