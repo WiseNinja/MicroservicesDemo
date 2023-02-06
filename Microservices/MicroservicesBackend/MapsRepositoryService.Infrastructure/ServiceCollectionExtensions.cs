@@ -23,18 +23,18 @@ public static class ServiceCollectionExtensions
             options.Endpoint = "minio:9000";
             options.AccessKey = "minio";
             options.SecretKey = "minio123";
-            options.ConfigureClient(async client =>
+            options.ConfigureClient(client =>
             {
                 client.Build();
-                var mapsBucketFound = await client.BucketExistsAsync(new BucketExistsArgs().WithBucket("maps-bucket"));
-                var missionMapBucketFound = await client.BucketExistsAsync(new BucketExistsArgs().WithBucket("missionmap-bucket"));
+                var mapsBucketFound = client.BucketExistsAsync(new BucketExistsArgs().WithBucket("maps-bucket")).Result;
+                var missionMapBucketFound = client.BucketExistsAsync(new BucketExistsArgs().WithBucket("missionmap-bucket")).Result;
                 if (!mapsBucketFound)
                 {
-                    await client.MakeBucketAsync(new MakeBucketArgs().WithBucket("maps-bucket"));
+                    client.MakeBucketAsync(new MakeBucketArgs().WithBucket("maps-bucket"));
                 }
                 if (!missionMapBucketFound)
                 {
-                    await client.MakeBucketAsync(new MakeBucketArgs().WithBucket("missionmap-bucket"));
+                    client.MakeBucketAsync(new MakeBucketArgs().WithBucket("missionmap-bucket"));
                 }
             });
         });
