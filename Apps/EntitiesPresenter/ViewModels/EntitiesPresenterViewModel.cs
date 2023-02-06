@@ -51,7 +51,7 @@ public class EntitiesPresenterViewModel : INotifyPropertyChanged
         try
         {
             var connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5003/MapEntitiesHub")
+                .WithUrl("http://localhost:5003/MapEntitiesHub").WithAutomaticReconnect()
                 .Build();
 
             connection.On<string>("MapPointAdded", (message) =>
