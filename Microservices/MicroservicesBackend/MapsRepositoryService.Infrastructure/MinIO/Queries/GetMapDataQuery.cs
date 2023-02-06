@@ -27,7 +27,7 @@ internal class GetMapDataQuery : IGetMapDataQuery
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error occured when fetching objects from maps-bucket, details {ex}");
+            _logger.LogError($"Error occurred when fetching objects from maps-bucket, details {ex}");
         }
         return mapData;
     }
