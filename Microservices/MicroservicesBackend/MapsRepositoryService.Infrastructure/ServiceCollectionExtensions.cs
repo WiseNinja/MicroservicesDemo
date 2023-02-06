@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IGetAllMapsQuery, GetAllMapsQuery>();
         services.AddTransient<IGetMapDataQuery, GetMapDataQuery>();
+        services.AddTransient<IGetMissionMapDataQuery, GetMissionMapDataQuery>();
         services.AddTransient<IGetMissionMapNameQuery, GetMissionMapNameQuery>();
         services.AddTransient<IInsertMapCommand, InsertMapCommand>();
         services.AddTransient<IDeleteMapCommand, DeleteMapCommand>();

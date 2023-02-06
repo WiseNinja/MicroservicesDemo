@@ -15,19 +15,19 @@ namespace MapsRepositoryService.Controllers
         private readonly IPublisher _publisher;
         private readonly ILogger<MissionMapsController> _logger;
         private readonly IGetMissionMapNameQuery _getMissionMapNameQuery;
-        private readonly IGetMapDataQuery _getMapDataQuery;
+        private readonly IGetMissionMapDataQuery _getMissionMapDataQuery;
         private readonly ISetMissionMapCommand _setMissionMapCommand;
 
         public MissionMapsController(IPublisher publisher,
             ILogger<MissionMapsController> logger, 
             IGetMissionMapNameQuery getMissionMapNameQuery,
-            IGetMapDataQuery getMapDataQuery,
+            IGetMissionMapDataQuery getMissionMapDataQuery,
             ISetMissionMapCommand setMissionMapCommand)
         {
             _publisher = publisher;
             _logger = logger;
             _getMissionMapNameQuery = getMissionMapNameQuery;
-            _getMapDataQuery = getMapDataQuery;
+            _getMissionMapDataQuery = getMissionMapDataQuery;
             _setMissionMapCommand = setMissionMapCommand;
         }
 
@@ -71,7 +71,7 @@ namespace MapsRepositoryService.Controllers
         [HttpGet(Name = "GetMissionMapData")]
         public async Task<ActionResult> GetMissionMapData(string mapName)
         {
-            var missionMapName = await _getMapDataQuery.GetMapDataByNameAsync(mapName);
+            var missionMapName = await _getMissionMapDataQuery.GetMissionMapDataByNameAsync(mapName);
             if (!string.IsNullOrEmpty(missionMapName))
             {
                 return Ok(missionMapName);
