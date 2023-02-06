@@ -12,12 +12,12 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
-        services.AddScoped<IGetAllMapsQuery, GetAllMapsQuery>();
-        services.AddScoped<IGetMapDataQuery, GetMapDataQuery>();
-        services.AddScoped<IGetMissionMapNameQuery, GetMissionMapNameQuery>();
-        services.AddScoped<IInsertMapCommand, InsertMapCommand>();
-        services.AddScoped<IDeleteMapCommand, DeleteMapCommand>();
-        services.AddScoped<ISetMissionMapCommand, SetMissionMapCommand>();
+        services.AddTransient<IGetAllMapsQuery, GetAllMapsQuery>();
+        services.AddTransient<IGetMapDataQuery, GetMapDataQuery>();
+        services.AddTransient<IGetMissionMapNameQuery, GetMissionMapNameQuery>();
+        services.AddTransient<IInsertMapCommand, InsertMapCommand>();
+        services.AddTransient<IDeleteMapCommand, DeleteMapCommand>();
+        services.AddTransient<ISetMissionMapCommand, SetMissionMapCommand>();
         services.AddMinio(options =>
         {
             options.Endpoint = "minio:9000";
