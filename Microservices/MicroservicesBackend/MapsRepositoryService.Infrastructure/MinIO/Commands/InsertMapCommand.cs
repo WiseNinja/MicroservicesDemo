@@ -19,6 +19,11 @@ internal class InsertMapCommand : IInsertMapCommand
     }
     public async Task<bool> InsertMapAsync(MapDto mapDto)
     {
+        if (mapDto.Data == null)
+        {
+            return false;
+        }
+
         Stream? mapFileContentsStream;
         var mapFileData = StripFileType(mapDto.Data);
         var contentType = GetContentTypeFromBase64String(mapFileData);

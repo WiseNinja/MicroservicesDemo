@@ -456,3 +456,7 @@ baseline.json
 # Husky
 .husky/_
 aio/content/examples/.DS_Store
+/Apps/entity-creator/.angular/cache/15.1.2/angular-webpack/390d172cbd55a41c42054f3b91afa02722e5e73a/*.pack
+*.pack
+*.old
+/Apps/entity-creator/.angular/cache/15.1.2/babel-webpack/*.json

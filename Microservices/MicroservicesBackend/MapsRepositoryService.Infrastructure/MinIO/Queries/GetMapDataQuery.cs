@@ -17,19 +17,19 @@ internal class GetMapDataQuery : IGetMapDataQuery
 
     public async Task<string> GetMapDataByNameAsync(string mapName)
     {
-        var fileData = string.Empty;
+        var mapData = string.Empty;
         try
         {
             var args = new GetObjectArgs()
                 .WithBucket("maps-bucket")
-                .WithObject(mapName).WithCallbackStream(stream => fileData = ConvertToBase64(stream));
+                .WithObject(mapName).WithCallbackStream(stream => mapData = ConvertToBase64(stream));
             await _minioClient.GetObjectAsync(args);
         }
         catch (Exception ex)
         {
             _logger.LogError($"Error occured when fetching objects from maps-bucket, details {ex}");
         }
-        return fileData;
+        return mapData;
     }
 
     private string ConvertToBase64(Stream stream)
