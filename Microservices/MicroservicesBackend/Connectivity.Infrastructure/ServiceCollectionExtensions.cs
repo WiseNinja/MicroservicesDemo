@@ -1,8 +1,8 @@
 ﻿using Connectivity.Core;
-using Infrastructure.RabbitMQ;
+using Connectivity.Infrastructure.RabbitMQ;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure;
+namespace Connectivity.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {

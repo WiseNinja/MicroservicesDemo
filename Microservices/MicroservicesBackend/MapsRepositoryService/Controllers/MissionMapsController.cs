@@ -2,7 +2,6 @@
 using MapsRepositoryService.Core.DB.Commands;
 using MapsRepositoryService.Core.DB.Queries;
 using MapsRepositoryService.Core.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

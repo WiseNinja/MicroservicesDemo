@@ -1,9 +1,7 @@
-﻿using Connectivity.Core;
-using MapsRepositoryService.Core.DB.Commands;
+﻿using MapsRepositoryService.Core.DB.Commands;
 using MapsRepositoryService.Core.DB.Queries;
 using MapsRepositoryService.Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace MapsRepositoryService.Controllers;
 

@@ -2,7 +2,7 @@
 using EasyNetQ;
 using Microsoft.Extensions.Logging;
 
-namespace Infrastructure.RabbitMQ;
+namespace Connectivity.Infrastructure.RabbitMQ;
 
 internal class RabbitMqPublisher : IPublisher
 {

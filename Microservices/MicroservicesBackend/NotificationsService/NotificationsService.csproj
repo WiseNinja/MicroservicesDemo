@@ -19,4 +19,9 @@
     <Folder Include="Hubs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Connectivity.Core\Connectivity.Core.csproj" />
+    <ProjectReference Include="..\Connectivity.Infrastructure\Connectivity.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

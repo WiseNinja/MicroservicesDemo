@@ -1,4 +1,4 @@
-using Infrastructure;
+using Connectivity.Infrastructure;
 using MapsRepositoryService.Infrastructure;
 using Serilog;
 
