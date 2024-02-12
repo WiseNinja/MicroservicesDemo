@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Connectivity.Core\Connectivity.Core.csproj" />
-    <ProjectReference Include="..\Connectivity\Connectivity.Core.csproj" />
   </ItemGroup>
 
 
